@@ -47,18 +47,19 @@ Tema: Desenvolver um software com framework web ou aplicativo que utilize banco 
 ## Índice
 
 <!--ts-->
-  * [Requisitos iniciais](#Requisitos-iniciais)
   * [Ambiente de desenvolvimento](#Ambiente-de-desenvolvimento)
 <!--te-->
 
-### Requisitos iniciais
+### Ambiente de desenvolvimento
+
+
+Requisitos iniciais
+
 
 - Baixe o VS Code: https://code.visualstudio.com/download
 - Baixe o git: https://git-scm.com/downloads
 - Baixe o Python: https://www.python.org/downloads/
 
-
-### Ambiente de desenvolvimento
 
 Faça o clone deste repositório via https ou ssh. Abra o terminal em qualquer pasta que queira manter o projeto e digite: 
 - ```git clone https://github.com/pisjc3/fechou-suas-vendas-agora.git``` para clone via https
