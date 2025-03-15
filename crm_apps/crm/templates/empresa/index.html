@@ -1,0 +1,9 @@
+{% extends 'global/base.html' %} 
+
+{% block content %}
+    <h1>Detalhes da Empresa</h1>
+    <p>Nome: {{ data.nome }}</p>
+    <p>CNPJ: {{ data.cnpj }}</p>
+    <p>Endereço: {{ data.endereco }}</p>
+    <p>Telefone: {{ data.telefone }}</p>
+{% endblock %}

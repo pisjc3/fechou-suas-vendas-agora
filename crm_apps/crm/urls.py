@@ -1,7 +1,7 @@
-# from django.urls import path, include
+from django.urls import path, include
+from . import views
 
-
-# urlpatterns = [
-#     # path('', include('crm_apps.crm.empresa.urls')),
-#     path('empresa/', include('crm_apps.crm.empresa.urls')),
-# ]
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('empresa/', include('crm_apps.crm.empresa.urls')),
+]

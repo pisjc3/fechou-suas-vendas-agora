@@ -1,0 +1,11 @@
+{% extends 'global/base.html' %}
+
+
+{% block content %}
+    <h1>Lista de Empresas</h1>
+    <ul>
+        {% for empresa in data %}
+            <li>{{ empresa.nome }}</li>  
+        {% endfor %}
+    </ul>
+{% endblock %}
