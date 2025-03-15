@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    {% include 'global/partials/_head.html' %}
+</head>
+
+<body>
+    <div class="container">
+        {% block content %}
+        <!-- 
+            aqui vem tudo que chamar   
+            {% extends 'global/base.html' %}
+
+            {% block content %}
+            {% endblock content %}
+        -->
+        {% endblock %}
+    </div>
+    {% include 'global/partials/_footer.html' %}
+    {% include 'global/partials/_scripts.html' %}
+</body>
+
+</html>
