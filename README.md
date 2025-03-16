@@ -48,62 +48,90 @@ Tema: Desenvolver um software com framework web ou aplicativo que utilize banco 
 
 <!--ts-->
   * [Ambiente de desenvolvimento](#Ambiente-de-desenvolvimento)
+    * [Requisitos iniciais](#Requisitos-iniciais)
+    * [Primeiro acesso](#Primeiro-acesso)
+    * [Desenvolvimento](#Desenvolvimento)
 <!--te-->
 
 ### Ambiente de desenvolvimento
 
 
-Requisitos iniciais
+Requisitos iniciais 
 
 
-- Baixe o VS Code: https://code.visualstudio.com/download
-- Baixe o git: https://git-scm.com/downloads
-- Baixe o Python: https://www.python.org/downloads/
+- Baixe o VS Code: https://code.visualstudio.com/download 🔗
+- Baixe o git: https://git-scm.com/downloads 🔗
+- Baixe o Python: https://www.python.org/downloads/ 🔗
 
+
+#### Primeiro acesso
 
 Faça o clone deste repositório via https ou ssh. Abra o terminal em qualquer pasta que queira manter o projeto e digite: 
 - ```git clone https://github.com/pisjc3/fechou-suas-vendas-agora.git``` para clone via https
 - ```git clone git@github.com:pisjc3/fechou-suas-vendas-agora.git``` para clone via ssh
 
 Com o projeto em sua máquina, crie um ambiente virtual na raiz
-```
+``` powershell
 python -m venv venv
 ```
 
 Ative o ambiente virtual no Windows
-```
+``` powershell
 venv/Scrpits/activate
 ```
 
 Ative o ambiente virtual no Linux ou macOS
-```
+``` bash
 source venv/bin/activate
 ```
 
 Caso o ambiente virtual não seja iniciado no Windows, abra o PowerShell como administrador e execute o comando
-```
+``` powershell
 Set-ExecutionPolicy AllSigned -Force
 ```
 
-Instale todas as dependências do arquivo ```requirements.txt```
-```
+Instale todas as dependências do arquivo ```requirements.txt``` 📦
+``` powershell
 pip install -r requirements.txt
 ```
 
-Faça as migrações necessárias para a base de dados do Django
-```
-python manage.py makemigrations
+Crie o arquivo ```.env``` na raiz do projeto, fazendo uma cópia do arquivo ```.env.example```, onde todas as variáveis de ambientes deverão ser preenchidas.
+
+Faça as migrações necessárias para a base do banco de dados 🗃️
+``` powershell
 python manage.py migrate
 ```
 
-Crie o superuser do Django
-```
+Crie o superuser do Django 🔐
+``` powershell
 python manage.py createsuperuser
 ```
 
-Rode o servidor do Django
-```
+Rode o servidor do Django 🚀
+``` powershell
 python manage.py runserver 
 ```
 
 Acesse a URL ```http://localhost:8000/admin/``` e faça o login com seu superuser
+
+#### Desenvolvimento
+
+Durante o desenvolvimento, alguns passos do Primeiro acesso devem ser repetidos:
+
+- Ativar o ambiente virtual
+- Rodar o servidor do Django
+
+Ao fazer alterações no modelos do Django, através dos arquivos ```models.py```, rode o comando para gerar as migrações
+
+``` powershell
+python manage.py makemigrations
+```
+
+E logo após, faça as migrações para a base do banco de dados
+``` powershell
+python manage.py migrate
+```
+
+
+
+
