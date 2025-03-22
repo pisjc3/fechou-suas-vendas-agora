@@ -1,0 +1,14 @@
+<div class="mb-3">
+    <label for="{{ field.id_for_label }}" class="form-label">
+        {{ field.label }}
+    </label>
+    {{ field }} 
+    {% if field.errors %}
+        <div class="text-danger small">
+            {{ field.errors|striptags }}
+        </div>
+    {% endif %}
+</div>
+<script>
+    document.getElementById("{{ field.id_for_label }}")?.classList.add("form-control");
+</script> 

@@ -16,8 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
+from crm_apps.crm.views import CustomUserCreationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('registration/login/', LoginView.as_view(), name='login'),
+    path('registration/logout/', LogoutView.as_view(), name='logout'),
+    path('registration/criar_conta/',
+         CustomUserCreationView.as_view(), name='create_account'),
     path('', include('crm_apps.crm.urls')),
 ]

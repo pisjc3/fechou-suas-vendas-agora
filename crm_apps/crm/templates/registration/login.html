@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    {% include 'global/partials/_head.html' %}
+  </head>
+  <body class="bg-light">
+    <div
+      class="container d-flex justify-content-center align-items-center min-vh-100"
+    >
+      <div
+        class="card shadow-lg p-4"
+        style="min-width: 350px; max-width: 400px; width: 100%"
+      >
+        <h2 class="text-center mb-4">Entrar na conta</h2>
+
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+            Usuário ou senha inválidos.
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %} 
+            {% for field in form %}
+                {% include 'global/partials/_form_registration_field.html' %}
+            {% endfor %}
+          <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+      </div>
+    </div>
+    {% include 'global/partials/_scripts.html' %}
+  </body>
+</html>
