@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from crm_apps.crm.usuario_empresa.models import UsuarioEmpresa
 from crm_apps.crm.empresa.models import Empresa
+from django.core.exceptions import ValidationError
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -28,6 +29,18 @@ class CustomUserCreationForm(UserCreationForm):
             'required': 'Este campo é obrigatório.',
             'invalid': 'As senhas não coincidem.'
         }
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Este nome de usuário já está em uso.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Este e-mail já está em uso.")
+        return email
 
     def save(self, commit=True):
         user = super().save(commit=False)
