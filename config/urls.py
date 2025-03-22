@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import LoginView, LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
-from crm_apps.views import CustomUserCreationView, CustomPasswordResetView
+from django.contrib.auth.views import LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from crm_apps.views import CustomLoginView, CustomUserCreationView, CustomPasswordResetView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registration/login/', LoginView.as_view(), name='login'),
+    path('registration/login/', CustomLoginView.as_view(), name='login'),
     path('registration/logout/', LogoutView.as_view(), name='logout'),
     path('registration/criar_conta/',
          CustomUserCreationView.as_view(), name='create_account'),

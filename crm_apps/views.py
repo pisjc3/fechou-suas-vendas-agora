@@ -1,11 +1,20 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm
 from .decorators import superadmin_required
+from django.shortcuts import redirect
+
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super().get(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')
