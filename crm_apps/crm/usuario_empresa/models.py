@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from crm_apps.users.models import CustomUser
 from crm_apps.crm.empresa.models import Empresa
 
 
 class UsuarioEmpresa(models.Model):
     usuario = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='empresas')
+        CustomUser, on_delete=models.CASCADE, related_name='empresas')
     empresa = models.ForeignKey(
         Empresa, on_delete=models.CASCADE, related_name='usuarios')
 
