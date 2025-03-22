@@ -24,10 +24,6 @@ class CustomUserCreationView(CreateView):
     template_name = 'registration/create_account.html'
     success_url = '/'
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
-
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'registration/password_reset.html'
