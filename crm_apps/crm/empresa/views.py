@@ -1,7 +1,6 @@
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from crm_apps.crm.empresa.models import Empresa

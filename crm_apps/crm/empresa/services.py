@@ -1,7 +1,4 @@
-from crm_apps.crm.util.validators import telefone_validator
-from django.core.exceptions import ValidationError
 from .models import Empresa
-from crm_apps.crm.util.validators import telefone_validator, cnpj_validator
 from typing import Optional
 from django.contrib.auth.models import User
 
