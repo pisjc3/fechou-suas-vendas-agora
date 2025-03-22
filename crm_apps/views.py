@@ -4,7 +4,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, PasswordResetView
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm
-from .decorators import superadmin_required
+from .crm.util.decorators import superadmin_required
 from django.shortcuts import redirect
 
 
