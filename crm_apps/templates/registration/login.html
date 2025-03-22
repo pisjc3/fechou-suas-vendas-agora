@@ -4,13 +4,8 @@
     {% include 'global/partials/_head.html' %}
   </head>
   <body class="bg-light">
-    <div
-      class="container d-flex justify-content-center align-items-center min-vh-100"
-    >
-      <div
-        class="card shadow-lg p-4"
-        style="min-width: 350px; max-width: 400px; width: 100%"
-      >
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card shadow-lg p-4" style="min-width: 350px; max-width: 400px; width: 100%">
         <h2 class="text-center mb-4">Entrar na conta</h2>
 
         {% if form.errors %}
@@ -25,6 +20,9 @@
                 {% include 'global/partials/_form_registration_field.html' %}
             {% endfor %}
           <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          <div class="text-center mt-3">
+            <a href="{% url 'password_reset' %}" class="text-decoration-none">Esqueci minha senha</a>
+          </div>
         </form>
       </div>
     </div>
