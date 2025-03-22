@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 from .forms import CustomUserCreationForm
+from .decorators import superadmin_required
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(superadmin_required, name='dispatch')
 class CustomUserCreationView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'registration/create_account.html'
