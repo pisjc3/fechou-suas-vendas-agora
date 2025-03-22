@@ -1,6 +1,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from crm_apps.crm.empresa.models import Empresa
@@ -8,6 +9,7 @@ from django.views.generic import View
 from crm_apps.crm.usuario_empresa.models import UsuarioEmpresa
 from .forms import EmpresaCreationForm
 from crm_apps.crm.util.decorators import superadmin_required
+from .services import criar_empresa
 
 
 @method_decorator(login_required, name='dispatch')
@@ -42,7 +44,16 @@ class EmpresaCreateView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+
         if form.is_valid():
-            form.save()
+            nome = form.cleaned_data['nome']
+            cnpj = form.cleaned_data['cnpj']
+            endereco = form.cleaned_data['endereco']
+            telefone = form.cleaned_data['telefone']
+            usuario = request.user
+
+            criar_empresa(nome=nome, cnpj=cnpj, endereco=endereco,
+                          telefone=telefone, usuario=usuario)
             return redirect('/')
+
         return render(request, self.template_name, {'form': form})
