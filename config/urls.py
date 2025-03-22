@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
-from crm_apps.crm.views import CustomUserCreationView
+from crm_apps.views import CustomUserCreationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
