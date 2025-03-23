@@ -1,0 +1,14 @@
+{% extends 'global/base.html' %}
+{% block content %}
+    <div style="min-width: 350px; max-width: 600px; width: 100%">
+        <h2 class="mb-4">Configurações do Usuário</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                {% include 'global/partials/_form_field.html' %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
+        </form>
+        <a href="{% url 'password_change' %}">Alterar senha</a>
+    </div>
+{% endblock %}

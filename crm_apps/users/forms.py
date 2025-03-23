@@ -54,3 +54,27 @@ class CustomUserCreationForm(UserCreationForm):
         UsuarioEmpresa.objects.create(usuario=user, empresa=empresa)
 
         return user
+
+
+class UserSettingsForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('instance', None)
+        super().__init__(*args, instance=self.user, **kwargs)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username != self.instance.username:
+            if User.objects.filter(username=username).exclude(pk=self.user.pk).exists():
+                raise ValidationError("Este nome de usuário já está em uso.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email != self.instance.email:
+            if User.objects.filter(email=email).exists():
+                raise ValidationError("Este e-mail já está em uso.")
+        return email

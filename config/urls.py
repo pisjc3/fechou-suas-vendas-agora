@@ -16,25 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
-from crm_apps.users.views import CustomLoginView, CustomUserCreationView, CustomPasswordResetView
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registration/login/', CustomLoginView.as_view(), name='login'),
-    path('registration/logout/', LogoutView.as_view(), name='logout'),
-    path('registration/criar_conta/',
-         CustomUserCreationView.as_view(), name='create_account'),
-    path('registration/resetar_senha/',
-         CustomPasswordResetView.as_view(), name='password_reset'),
-    path('registration/resetar_senha/done/',
-         PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('registration/resetar_senha/confirm/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('registration/resetar_senha/complete/',
-         PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('accounts/', include('crm_apps.users.urls')),
     path('', include('crm_apps.crm.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
