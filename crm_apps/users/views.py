@@ -31,6 +31,15 @@ class CustomUserCreationView(CreateView):
     template_name = 'accounts/create_account.html'
     success_url = '/'
 
+    def form_valid(self, form):
+        messages.success(self.request, "Usuário criado com sucesso!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request, "Houve um erro ao criar usuário. Tente novamente.")
+        return super().form_invalid(form)
+
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'

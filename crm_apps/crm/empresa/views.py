@@ -9,6 +9,9 @@ from crm_apps.crm.usuario_empresa.models import UsuarioEmpresa
 from .forms import EmpresaCreationForm
 from crm_apps.crm.util.decorators import superadmin_required
 from .services import criar_empresa
+from django.contrib import messages
+from django.http import Http404
+from .selectors import usuario_pertence_empresa
 
 
 @method_decorator(login_required, name='dispatch')
@@ -26,8 +29,16 @@ class EmpresaDetailsView(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        if not UsuarioEmpresa.objects.filter(usuario=self.request.user, empresa=obj).exists():
-            return None
+
+        # verifica se o usuário é superadmin ou tem permissão para visualizar a empresa
+        if self.request.user.is_superuser:
+            return obj
+
+        # para outros usuários, verifica se existe uma associação no modelo UsuarioEmpresa
+        if not usuario_pertence_empresa(usuario=self.request.user.id, empresa=obj.id):
+            raise Http404(
+                "Você não tem permissão para visualizar esta empresa.")
+
         return obj
 
 
@@ -51,8 +62,15 @@ class EmpresaCreateView(View):
             telefone = form.cleaned_data['telefone']
             usuario = request.user
 
-            criar_empresa(nome=nome, cnpj=cnpj, endereco=endereco,
-                          telefone=telefone, usuario=usuario)
-            return redirect('/')
+            try:
+                criar_empresa(nome=nome, cnpj=cnpj, endereco=endereco,
+                              telefone=telefone, usuario=usuario)
+                messages.success(request, "Empresa criada com sucesso!")
+                return redirect('/')
+            except Exception as e:
+                messages.error(request, "Erro ao criar a empresa")
+
+        else:
+            messages.error(request, "Por favor, corrija os erros abaixo.")
 
         return render(request, self.template_name, {'form': form})
