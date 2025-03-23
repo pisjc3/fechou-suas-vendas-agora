@@ -9,7 +9,7 @@ urlpatterns = [
     path('configuracoes/', UserSettingsView.as_view(), name='settings'),
     path('alterar_senha/', CustomPasswordChangeView.as_view(),
          name='password_change'),
-    path('criar_conta/',
+    path('criar/',
          CustomUserCreationView.as_view(), name='create_account'),
     path('resetar_senha/',
          CustomPasswordResetView.as_view(), name='password_reset'),
