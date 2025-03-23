@@ -31,6 +31,11 @@ class CustomUserCreationView(CreateView):
     template_name = 'accounts/create_account.html'
     success_url = '/'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['files'] = self.request.FILES
+        return kwargs
+
     def form_valid(self, form):
         messages.success(self.request, "Usuário criado com sucesso!")
         return super().form_valid(form)
