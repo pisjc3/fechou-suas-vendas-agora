@@ -9,4 +9,9 @@
     {% endfor %}
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        phoneMask('id_telefone'); 
+    });
+  </script>
 {% endblock %}

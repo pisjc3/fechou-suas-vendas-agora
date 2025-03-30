@@ -44,3 +44,9 @@ class ClienteCreationAdminForm(ClienteCreationFormBase):
         widget=forms.Select(),
         label="Empresa"
     )
+
+
+class ClienteUpdateForm(ClienteCreationFormBase):
+    class Meta:
+        model = Cliente
+        fields = ['nome', 'data_nascimento', 'endereco', 'telefone']

@@ -1,0 +1,17 @@
+<div class="container-fluid d-flex justify-content-center">
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%">
+    <div class="card-body p-0">
+      {% for label, value in details.items %}
+      <div class="mb-3">
+        <p class="fw-bold mb-1">{{ label }}:</p>
+        <p>{{ value|default:"-" }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      {% if update_url %}
+      <a href="{{ update_url }}" class="btn btn-primary"> Editar </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

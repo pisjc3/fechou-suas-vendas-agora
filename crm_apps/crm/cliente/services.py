@@ -24,3 +24,28 @@ def criar_cliente(*,
 
     cliente.clean()
     cliente.save()
+
+
+def update_cliente(*,
+                   cliente_id: int,
+                   nome: Optional[str] = None,
+                   data_nascimento: Optional[date] = None,
+                   endereco: Optional[str] = None,
+                   telefone: Optional[str] = None,
+                   ) -> Cliente:
+
+    cliente = Cliente.objects.get(id=cliente_id)
+
+    if nome:
+        cliente.nome = nome
+    if data_nascimento:
+        cliente.data_nascimento = data_nascimento
+    if endereco:
+        cliente.endereco = endereco
+    if telefone:
+        cliente.telefone = telefone
+
+    cliente.clean()
+    cliente.save()
+
+    return cliente

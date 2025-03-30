@@ -12,7 +12,7 @@
     <tbody>
       {% for cliente in object_list %}
         <tr>
-          <td><a href="{% url 'cliente_detail' cliente.id %}" class="link-underline link-underline-opacity-0">{{ cliente.nome }}</a></td>
+          <td><a href="{% url 'cliente_details' cliente.id %}" class="link-underline link-underline-opacity-0">{{ cliente.nome }}</a></td>
           <td>{{ cliente.data_nascimento|date:"d/m/Y"|default:"-"  }}</td>
           <td>{{ cliente.endereco|default:"-" }}</td>
           <td>{{ cliente.telefone|default:"-" }}</td>
