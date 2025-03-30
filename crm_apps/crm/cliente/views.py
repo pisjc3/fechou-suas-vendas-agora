@@ -34,8 +34,8 @@ class ClienteListView(ListView):
         self.filterset = ClienteFilter(self.request.GET, queryset=queryset)
         queryset_filtrado = self.filterset.qs
 
-        sort_param = self.request.GET.get('sort')
-        order_param = self.request.GET.get('order')
+        sort_param = self.request.GET.get('sort', 'nome')
+        order_param = self.request.GET.get('order', 'asc')
 
         if sort_param == 'data-de-nascimento':
             sort_param = 'data_nascimento'
