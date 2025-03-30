@@ -2,7 +2,7 @@
   <thead>
     <tr>
       {% for header in headers %}
-        <th scope="col">{{ header }}</th>
+        {% include 'global/partials/_table_header.html' %}
       {% endfor %}
     </tr>
   </thead>

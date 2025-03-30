@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.shortcuts import redirect
 from django.contrib import messages
+from crm_apps.common.ordering import sort_queryset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -25,12 +26,19 @@ class ClienteListView(ListView):
         if usuario.is_superuser:
             queryset = Cliente.objects.all()
         else:
-            empresa = get_empresa_do_usuario(usuario.id)
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
             queryset = Cliente.objects.filter(empresa=empresa)
 
         self.filterset = ClienteFilter(self.request.GET, queryset=queryset)
+        queryset_filtrado = self.filterset.qs
 
-        return self.filterset.qs
+        sort_param = self.request.GET.get('sort')
+        order_param = self.request.GET.get('order')
+
+        queryset_ordenado = sort_queryset(
+            queryset_filtrado, sort_param, order_param)
+
+        return queryset_ordenado
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +73,7 @@ class ClienteDetailsView(DetailView):
             return obj
 
         usuario_empresa = get_usuario_empresa(
-            usuario=usuario.id, empresa=obj.empresa.id)
+            usuario_id=usuario.id, empresa_id=obj.empresa.id)
 
         if not usuario_empresa:
             raise Http404(
