@@ -4,7 +4,7 @@
     class="text-decoration-none"
   >
     {{ header }} 
-    {% if request.GET.sort == header|lower %} 
+    {% if request.GET.sort == header|lower|slugify %} 
         {% if request.GET.order == 'asc' %}
             <span class="ms-2">&#9650;</span> 
         {% elif request.GET.order == 'desc' %}
@@ -13,4 +13,3 @@
     {% endif %}
   </a>
 </th>
-
