@@ -1,17 +1,21 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
-  <h1>Editar cliente</h1>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-        {% include 'global/partials/_form_field.html' %}
-    {% endfor %}
-    <button type="submit" class="btn btn-primary">Salvar</button>
-  </form>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        phoneMask('id_telefone'); 
-    });
-  </script>
+<div class="container d-flex justify-content-left align-items-center ">
+    <div style="min-width: 350px; max-width: 600px; width: 100%">
+        <h2 class="mb-4">Novo cliente</h2>
+        <form method="POST">
+          {% csrf_token %}
+          {% for field in form %}
+              {% include 'global/partials/_form_field.html' %}
+          {% endfor %}
+          {% include 'global/partials/_form_buttons.html' with cancel_url='/cliente/' %}
+        </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                phoneMask('id_telefone'); 
+            });
+        </script>
+    </div>
+</div>
 {% endblock %}

@@ -10,7 +10,7 @@
             {% for field in form %}
                 {% include 'global/partials/_form_field.html' %}
             {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Criar Empresa</button>
+            {% include 'global/partials/_form_buttons.html' with cancel_url='/' %}
         </form>
         <script>
             document.addEventListener("DOMContentLoaded", function() {

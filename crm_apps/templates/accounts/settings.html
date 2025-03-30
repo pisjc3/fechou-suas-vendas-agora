@@ -7,7 +7,7 @@
             {% for field in form %}
                 {% include 'global/partials/_form_field.html' %}
             {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
+            {% include 'global/partials/_form_buttons.html' with cancel_url='/' confirm_label="Salvar alterações" %}
         </form>
         <a href="{% url 'password_change' %}">Alterar senha</a>
     </div>
