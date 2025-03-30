@@ -2,7 +2,7 @@ from crm_apps.users.models import CustomUser
 from crm_apps.common.models import BaseModel
 from django.db import models
 from django.core.exceptions import ValidationError
-from crm_apps.common.util.validators import telefone_validator, cnpj_validator
+from crm_apps.common.validators import telefone_validator, cnpj_validator
 
 
 class Empresa(BaseModel):

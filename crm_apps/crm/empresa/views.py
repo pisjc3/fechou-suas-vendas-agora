@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from crm_apps.crm.empresa.models import Empresa
 from django.views.generic import View
 from .forms import EmpresaCreationForm
-from crm_apps.common.util.decorators import superadmin_required
+from crm_apps.common.decorators import superadmin_required
 from .services import criar_empresa
 from django.contrib import messages
 from django.http import Http404
