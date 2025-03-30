@@ -61,7 +61,7 @@ class ClienteListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class ClienteDetailsView(DetailView):
     model = Cliente
-    template_name = 'empresa/cliente_detail.html'
+    template_name = 'cliente/cliente_detail.html'
     context_object_name = 'data'
 
     def get_object(self, queryset=None):
