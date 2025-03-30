@@ -9,6 +9,7 @@ class Cliente(BaseModel):
     endereco = models.CharField(max_length=500, blank=True, null=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    data_nascimento = models.DateField(blank=True, null=True)
     criado_por = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):

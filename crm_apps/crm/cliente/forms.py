@@ -7,12 +7,18 @@ from crm_apps.crm.empresa.models import Empresa
 class ClienteCreationFormBase(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['nome', 'endereco', 'telefone']
+        fields = ['nome', 'data_nascimento', 'endereco', 'telefone']
 
     nome = forms.CharField(
         required=True,
         widget=forms.TextInput(
             attrs={'placeholder': 'Digite o nome do cliente'}),
+    )
+    data_nascimento = forms.DateField(
+        required=False,
+        widget=forms.DateInput(
+            attrs={'placeholder': 'Informe a data de nascimento', 'type': 'date'}),
+        input_formats=['%Y-%m-%d'],
     )
     endereco = forms.CharField(
         label="Endereço",

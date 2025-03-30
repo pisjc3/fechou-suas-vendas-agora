@@ -11,6 +11,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.contrib import messages
 from crm_apps.common.ordering import sort_queryset
+from crm_apps.common.util.formats import format_date, format_datetime
 
 
 @method_decorator(login_required, name='dispatch')
@@ -35,6 +36,11 @@ class ClienteListView(ListView):
         sort_param = self.request.GET.get('sort')
         order_param = self.request.GET.get('order')
 
+        if sort_param == 'data-de-nascimento':
+            sort_param = 'data_nascimento'
+        if sort_param == 'data-de-criacao':
+            sort_param = 'data_criacao'
+
         queryset_ordenado = sort_queryset(
             queryset_filtrado, sort_param, order_param)
 
@@ -43,13 +49,19 @@ class ClienteListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['headers'] = ['Nome', 'Endereço', 'Telefone']
-
         is_superuser = self.request.user.is_superuser
 
+        context['headers'] = [
+            'Nome', 'Data de nascimento', 'Endereço', 'Telefone', 'Data de criação']
+
         context['data'] = [
-            [cliente.nome, cliente.endereco, cliente.telefone] +
-            ([cliente.empresa] if is_superuser else [])
+            [
+                cliente.nome,
+                format_date(cliente.data_nascimento),
+                cliente.endereco,
+                cliente.telefone,
+                format_datetime(cliente.data_criacao)
+            ] + ([cliente.empresa] if is_superuser else [])
             for cliente in context['data']
         ]
 
@@ -106,6 +118,7 @@ class ClienteCreateView(CreateView):
 
         criar_cliente(
             nome=form.cleaned_data['nome'],
+            data_nascimento=form.cleaned_data.get('data_nascimento'),
             endereco=form.cleaned_data.get('endereco'),
             telefone=form.cleaned_data.get('telefone'),
             empresa=empresa,
