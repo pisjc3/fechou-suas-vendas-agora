@@ -1,0 +1,11 @@
+{% load custom_filters %}
+
+<form method="GET" class="mb-3">
+  <input
+    type="text"
+    name="{{ search_param|default:'search' }}"
+    class="form-control"
+    placeholder="{{ placeholder|default:'Buscar' }}"
+    value="{{ request.GET|get_param:search_param }}"
+  />
+</form>

@@ -1,5 +1,3 @@
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden
 
 

@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChan
 from django.urls import reverse_lazy
 from crm_apps.users.forms import CustomUserCreationForm, UserSettingsForm
 from django.contrib.auth.forms import PasswordChangeForm
-from crm_apps.crm.util.decorators import superadmin_required
+from crm_apps.common.util.decorators import superadmin_required
 from django.shortcuts import redirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages

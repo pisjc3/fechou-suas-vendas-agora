@@ -6,6 +6,8 @@
     <a href="{% url 'cliente_create' %}" class="btn btn-primary">Novo Cliente</a>
   </div>
 
+  {% include 'global/partials/_search_filter.html' with search_param="search" placeholder="Buscar clientes" %}
+
   {% include 'global/partials/_table.html' with data=data headers=headers %}
 
   {% include 'global/partials/_pagination.html' %}

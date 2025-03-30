@@ -5,6 +5,7 @@ from crm_apps.crm.cliente.models import Cliente
 from crm_apps.crm.util.selectors import get_usuario_empresa, get_empresa_do_usuario
 from .forms import ClienteCreationFormBase, ClienteCreationAdminForm
 from .services import criar_cliente
+from .filters import ClienteFilter
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.shortcuts import redirect
@@ -22,11 +23,14 @@ class ClienteListView(ListView):
         usuario = self.request.user
 
         if usuario.is_superuser:
-            return Cliente.objects.all()
+            queryset = Cliente.objects.all()
+        else:
+            empresa = get_empresa_do_usuario(usuario.id)
+            queryset = Cliente.objects.filter(empresa=empresa)
 
-        empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+        self.filterset = ClienteFilter(self.request.GET, queryset=queryset)
 
-        return Cliente.objects.filter(empresa=empresa)
+        return self.filterset.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

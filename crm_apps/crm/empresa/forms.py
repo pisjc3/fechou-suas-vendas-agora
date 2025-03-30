@@ -1,6 +1,6 @@
 from django import forms
 from .models import Empresa
-from crm_apps.crm.util.validators import telefone_validator, cnpj_validator
+from crm_apps.common.util.validators import telefone_validator, cnpj_validator
 from django.core.exceptions import ValidationError
 
 

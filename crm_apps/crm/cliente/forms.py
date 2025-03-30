@@ -1,6 +1,6 @@
 from django import forms
 from .models import Cliente
-from crm_apps.crm.util.validators import telefone_validator
+from crm_apps.common.util.validators import telefone_validator
 from crm_apps.crm.empresa.models import Empresa
 
 
