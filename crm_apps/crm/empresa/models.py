@@ -10,8 +10,7 @@ class Empresa(BaseModel):
     cnpj = models.CharField(max_length=18, blank=True, null=True)
     endereco = models.CharField(max_length=500, blank=True, null=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
-    criado_por = models.ForeignKey(
-        CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    criado_por = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome

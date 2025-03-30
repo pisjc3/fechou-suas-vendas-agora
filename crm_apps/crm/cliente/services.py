@@ -1,22 +1,23 @@
-from .models import Empresa
+from .models import Cliente
 from typing import Optional
 from crm_apps.users.models import CustomUser
+from crm_apps.crm.empresa.models import Empresa
 
 
-def criar_empresa(*,
+def criar_cliente(*,
                   nome: str,
-                  cnpj: Optional[str] = None,
                   endereco: Optional[str] = None,
                   telefone: Optional[str] = None,
-                  criado_por: CustomUser) -> Empresa:
+                  empresa: Empresa,
+                  criado_por: CustomUser) -> Cliente:
 
-    empresa = Empresa(
+    cliente = Cliente(
         nome=nome,
-        cnpj=cnpj,
         endereco=endereco,
         telefone=telefone,
+        empresa=empresa,
         criado_por=criado_por,
     )
 
-    empresa.clean()
-    empresa.save()
+    cliente.clean()
+    cliente.save()

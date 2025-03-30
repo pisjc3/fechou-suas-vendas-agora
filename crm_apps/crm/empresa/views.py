@@ -1,17 +1,15 @@
-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from crm_apps.crm.empresa.models import Empresa
 from django.views.generic import View
-from crm_apps.crm.usuario_empresa.models import UsuarioEmpresa
 from .forms import EmpresaCreationForm
 from crm_apps.crm.util.decorators import superadmin_required
 from .services import criar_empresa
 from django.contrib import messages
 from django.http import Http404
-from .selectors import usuario_pertence_empresa
+from crm_apps.crm.util.selectors import get_usuario_empresa
 
 
 @method_decorator(login_required, name='dispatch')
@@ -34,8 +32,11 @@ class EmpresaDetailsView(DetailView):
         if self.request.user.is_superuser:
             return obj
 
+        usuario_empresa = get_usuario_empresa(
+            usuario_id=self.request.user.id, empresa_id=obj.id)
+
         # para outros usuários, verifica se existe uma associação no modelo UsuarioEmpresa
-        if not usuario_pertence_empresa(usuario=self.request.user.id, empresa=obj.id):
+        if not usuario_empresa:
             raise Http404(
                 "Você não tem permissão para visualizar esta empresa.")
 
@@ -64,7 +65,7 @@ class EmpresaCreateView(View):
 
             try:
                 criar_empresa(nome=nome, cnpj=cnpj, endereco=endereco,
-                              telefone=telefone, usuario=usuario)
+                              telefone=telefone, criado_por=usuario)
                 messages.success(request, "Empresa criada com sucesso!")
                 return redirect('/')
             except Exception as e:

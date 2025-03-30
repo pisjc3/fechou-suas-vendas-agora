@@ -1,6 +1,7 @@
 
 from crm_apps.crm.usuario_empresa.models import UsuarioEmpresa
 from crm_apps.crm.empresa.models import Empresa
+from crm_apps.crm.cliente.models import Cliente
 from django.contrib import admin
 
 
@@ -15,4 +16,12 @@ class EmpresaAdmin(admin.ModelAdmin):
 class UsuarioEmpresaAdmin(admin.ModelAdmin):
     list_display = ('id', 'usuario', 'empresa')
     search_fields = ('usuario', 'empresa')
+    ordering = ('-id',)
+
+
+@admin.register(Cliente)
+class ClienteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nome', 'endereco',
+                    'telefone', 'empresa', 'criado_por')
+    search_fields = ('nome', 'empresa')
     ordering = ('-id',)
