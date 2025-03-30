@@ -1,0 +1,12 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+  <h1>Editar cliente</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {% include 'global/partials/_form_field.html' %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+{% endblock %}

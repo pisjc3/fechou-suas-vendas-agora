@@ -16,7 +16,35 @@ class ClienteListView(ListView):
     model = Cliente
     template_name = 'cliente/cliente_list.html'
     context_object_name = 'data'
-    paginate_by = 5
+    paginate_by = 10
+
+    def get_queryset(self):
+        usuario = self.request.user
+
+        if usuario.is_superuser:
+            return Cliente.objects.all()
+
+        empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+
+        return Cliente.objects.filter(empresa=empresa)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['headers'] = ['Nome', 'Endereço', 'Telefone']
+
+        is_superuser = self.request.user.is_superuser
+
+        context['data'] = [
+            [cliente.nome, cliente.endereco, cliente.telefone] +
+            ([cliente.empresa] if is_superuser else [])
+            for cliente in context['data']
+        ]
+
+        if is_superuser:
+            context['headers'].append('Empresa')
+
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
