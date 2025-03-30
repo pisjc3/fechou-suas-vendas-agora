@@ -11,7 +11,6 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.contrib import messages
 from crm_apps.common.ordering import sort_queryset
-from crm_apps.common.util.formats import format_date, format_datetime
 
 
 @method_decorator(login_required, name='dispatch')
@@ -49,25 +48,13 @@ class ClienteListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        is_superuser = self.request.user.is_superuser
+        headers = ["Nome", "Data de nascimento",
+                   "Endereço", "Telefone", "Data de criação"]
 
-        context['headers'] = [
-            'Nome', 'Data de nascimento', 'Endereço', 'Telefone', 'Data de criação']
+        if self.request.user.is_superuser:
+            headers.append("Empresa")
 
-        context['data'] = [
-            [
-                cliente.nome,
-                format_date(cliente.data_nascimento),
-                cliente.endereco,
-                cliente.telefone,
-                format_datetime(cliente.data_criacao)
-            ] + ([cliente.empresa] if is_superuser else [])
-            for cliente in context['data']
-        ]
-
-        if is_superuser:
-            context['headers'].append('Empresa')
-
+        context["headers"] = headers
         return context
 
 

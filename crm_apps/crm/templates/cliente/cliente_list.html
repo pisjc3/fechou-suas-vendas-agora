@@ -1,15 +1,34 @@
-{% extends 'global/base.html' %}
+{% extends 'global/base.html' %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Lista de clientes</h1>
+  <a href="{% url 'cliente_create' %}" class="btn btn-primary">Novo Cliente</a>
+</div>
 
-{% block content %}
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Lista de clientes</h1>
-    <a href="{% url 'cliente_create' %}" class="btn btn-primary">Novo Cliente</a>
-  </div>
+{% include 'global/partials/_search_filter.html' with search_param="search" placeholder="Buscar clientes" %}
 
-  {% include 'global/partials/_search_filter.html' with search_param="search" placeholder="Buscar clientes" %}
+<section class="table-responsive">
+  <table class="table table-striped">
+    {% include 'global/partials/_table_header.html' with headers=headers %}
+    <tbody>
+      {% for cliente in object_list %}
+        <tr>
+          <td><a href="{% url 'cliente_detail' cliente.id %}" class="link-underline link-underline-opacity-0">{{ cliente.nome }}</a></td>
+          <td>{{ cliente.data_nascimento|date:"d/m/Y"|default:"-"  }}</td>
+          <td>{{ cliente.endereco|default:"-" }}</td>
+          <td>{{ cliente.telefone|default:"-" }}</td>
+          <td>{{ cliente.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
+          
+          {% if request.user.is_superuser %}
+            <td>{{ cliente.empresa }}</td>
+          {% endif %}
+        </tr>
+        {% empty %}
+          <tr>
+            <td colspan="{{ headers|length }}" class="text-center">Nenhum cliente encontrado.</td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
 
-  {% include 'global/partials/_table.html' with data=data headers=headers %}
-
-  {% include 'global/partials/_pagination.html' %}
-  
-{% endblock %}
+{% include 'global/partials/_pagination.html' %} {% endblock %}

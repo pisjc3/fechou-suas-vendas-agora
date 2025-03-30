@@ -1,15 +1,21 @@
-<th scope="col">
-  <a
-    href="?{% if request.GET.sort == header|lower|slugify %}{% if request.GET.order == 'asc' %}sort={{ header|lower|slugify }}&order=desc{% elif request.GET.order == 'desc' %}{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-    class="text-decoration-none"
-  >
-    {{ header }} 
-    {% if request.GET.sort == header|lower|slugify %} 
-        {% if request.GET.order == 'asc' %}
-            <span class="ms-2">&#9650;</span> 
-        {% elif request.GET.order == 'desc' %}
-            <span class="ms-2">&#9660;</span> 
-        {% endif %} 
-    {% endif %}
-  </a>
-</th>
+<thead>
+  <tr>
+    {% for header in headers %}
+      <th scope="col">
+        <a
+          href="?{% if request.GET.sort == header|lower|slugify %}{% if request.GET.order == 'asc' %}sort={{ header|lower|slugify }}&order=desc{% elif request.GET.order == 'desc' %}{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="text-black text-decoration-none"
+        >
+          {{ header }} 
+          {% if request.GET.sort == header|lower|slugify %} 
+            {% if request.GET.order == 'asc' %}
+              <span class="ms-2">&#9650;</span> 
+            {% elif request.GET.order == 'desc' %}
+              <span class="ms-2">&#9660;</span> 
+            {% endif %} 
+          {% endif %}
+        </a>
+      </th>
+    {% endfor %}
+  </tr>
+</thead>
