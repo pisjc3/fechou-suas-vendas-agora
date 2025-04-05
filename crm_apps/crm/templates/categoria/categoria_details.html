@@ -1,0 +1,6 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+  <h1 class="text-center my-4">Detalhes da categoria de produto</h1>
+  {% include 'global/partials/_card_details.html' with data=data update_url=update_url %}
+{% endblock %}
