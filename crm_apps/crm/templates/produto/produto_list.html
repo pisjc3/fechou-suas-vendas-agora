@@ -12,7 +12,7 @@
   <table class="table table-striped">
     
     <!-- TABLE_HEADER -->
-    {% include 'global/partials/_table_header.html' with headers=headers request=request %}
+    {% include 'global/partials/_table_header.html' with headers=headers request=request show_actions="true" %}
 
     <tbody>
       {% for produto in object_list %}

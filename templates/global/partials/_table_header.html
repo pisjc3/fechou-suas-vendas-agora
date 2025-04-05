@@ -19,7 +19,10 @@
       </th>
     {% endfor %}
 
-    {% include 'global/partials/_table_header_actions.html' %}
-
+    <!-- COLUNA ACTIONS -->
+    {% if show_actions %}
+      {% include 'global/partials/_table_header_actions.html' %}
+    {% endif %}
+  
   </tr>
 </thead>
