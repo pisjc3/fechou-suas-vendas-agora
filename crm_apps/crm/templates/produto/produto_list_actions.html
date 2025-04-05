@@ -1,0 +1,35 @@
+<li>
+    <a href="{% url 'produto_update' produto.id %}" class="dropdown-item">
+        <i class="bi bi-pencil me-1"></i> Editar
+    </a>
+</li>
+<li>
+    {% if produto.status == 'ativo' %}
+        <a href="{% url 'produto_change_status' produto.id %}" class="dropdown-item">
+            <div class="d-flex align-items-center gap-1">
+                <i class="bi bi-x-circle me-1"></i> 
+                Desativar
+            </div>
+        </a>
+    {% else %}
+      <a href="{% url 'produto_change_status' produto.id %}" class="dropdown-item">
+        <div class="d-flex align-items-center gap-1">
+            <i class="bi bi-check-circle me-1"></i>
+            Ativar
+        </div>
+      </a>
+    {% endif %}
+</li>
+<li><hr class="dropdown-divider"></li>
+<li>
+    <button
+      class="dropdown-item text-danger"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteModal-{{ produto.id }}"
+    >
+      <div class="d-flex align-items-center gap-1">
+        <i class="bi bi-trash me-1"></i> Excluir
+      </div>
+    </button> 
+</li>

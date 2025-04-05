@@ -6,4 +6,5 @@ urlpatterns = [
     path('empresa/', include('crm_apps.crm.empresa.urls')),
     path('cliente/', include('crm_apps.crm.cliente.urls')),
     path('categoria/', include('crm_apps.crm.categoria.urls')),
+    path('produto/', include('crm_apps.crm.produto.urls')),
 ]

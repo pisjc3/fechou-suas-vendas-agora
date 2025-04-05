@@ -87,6 +87,7 @@ th * {
 td,
 td * {
   font-size: 0.875rem;
+  vertical-align: middle;
 }
 
 .alert-success {

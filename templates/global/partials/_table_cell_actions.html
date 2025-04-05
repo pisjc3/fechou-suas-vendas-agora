@@ -1,0 +1,17 @@
+<td class="text-center">
+    <div class="dropdown">
+      <button
+        class="btn p-0 border-0 bg-transparent"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="bi bi-three-dots-vertical fs-5 text-dark"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        {% comment %} opções do menu {% endcomment %}
+        {% include actions_template with object=object %}
+      </ul>
+    </div>
+  </td>
+  

@@ -1,0 +1,17 @@
+{% extends 'global/base.html' %} 
+
+{% block content %}
+<div class="container d-flex justify-content-left align-items-center ">
+    <div style="min-width: 350px; max-width: 600px; width: 100%">
+        <h2 class="mb-4">Nova Produto</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                {% include 'global/partials/_form_field.html' %}
+            {% endfor %}
+            {% include 'global/partials/_form_buttons.html' with cancel_url='/categoria/' %}
+        </form>
+    </div>
+</div>
+{% endblock %}
