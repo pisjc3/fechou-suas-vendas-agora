@@ -208,25 +208,15 @@ class ProdutoDeleteView(DeleteView):
     context_object_name = "produto"
     success_url = reverse_lazy("produto_list")
 
-    # def delete(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     nome_produto = self.object.nome
-    #     try:
-    #         response = super().delete(request, *args, **kwargs)
-    #         messages.success(
-    #             request, f'O produto "{nome_produto}" foi excluído com sucesso.')
-    #         return response
-    #     except Exception as e:
-    #         messages.error(
-    #             request, f'Ocorreu um erro ao excluir o produto "{nome_produto}".')
-    #         return redirect(self.success_url)
-
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         nome_produto = self.object.nome
-        response = super().delete(request, *args, **kwargs)
-        messages.success(
-            request, f'O produto "{nome_produto}" foi excluído com sucesso.')
-
-        # Forçando o redirecionamento após a exclusão
-        return redirect(self.success_url)
+        try:
+            response = super().delete(request, *args, **kwargs)
+            messages.success(
+                request, f'O produto "{nome_produto}" foi excluído com sucesso.')
+            return response
+        except Exception as e:
+            messages.error(
+                request, f'Ocorreu um erro ao excluir o produto "{nome_produto}".')
+            return redirect(self.success_url)
