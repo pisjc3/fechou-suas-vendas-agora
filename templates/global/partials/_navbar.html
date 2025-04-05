@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4">
   <div class="container">
     {% if user.is_authenticated %}
     <div class="d-flex align-items-center">
@@ -20,7 +20,7 @@
         height="40"
       />
       {% endif %}
-      <span class="ms-2 nav-link">{{ user.get_username }}</span>
+      <a href="/" class="ms-2 nav-link">{{ user.get_username }}</a>
     </div>
     {% endif %}
 

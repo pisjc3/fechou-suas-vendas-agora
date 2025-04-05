@@ -1,5 +1,25 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
-    <h1>Bem-vindo à página inicial!</h1>
+<div class="container ">
+  <h1 class="mb-4">Bem-vindo à página inicial!</h1>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <a href="/cliente/" class="btn btn-primary w-100 p-4 fs-5 shadow rounded-3">
+        🧑 Clientes
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="/cliente/" class="btn btn-success w-100 p-4 fs-5 shadow rounded-3">
+        📦 Produtos
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="/cliente/" class="btn btn-warning w-100 p-4 fs-5 shadow rounded-3">
+        💰 Vendas
+      </a>
+    </div>
+  </div>
+</div>
 {% endblock %}
