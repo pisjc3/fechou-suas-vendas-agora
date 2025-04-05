@@ -1,10 +1,11 @@
 <thead>
   <tr>
     {% for header in headers %}
-      <th scope="col">
+      <th scope="col" class="text-truncate" style="max-width: 150px;">
         <a
           href="?{% if request.GET.sort == header|lower|slugify %}{% if request.GET.order == 'asc' %}sort={{ header|lower|slugify }}&order=desc{% elif request.GET.order == 'desc' %}{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% else %}sort={{ header|lower|slugify }}&order=asc{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
           class="text-black text-decoration-none"
+          title="{{ header }}"
         >
           {{ header }} 
           {% if request.GET.sort == header|lower|slugify %} 

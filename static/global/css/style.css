@@ -9,6 +9,9 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: "Inter", sans-serif;
   color: #000000fe;
 }
@@ -49,6 +52,10 @@ a {
   text-decoration: none;
   color: #0d6efd;
   font-weight: 500;
+}
+
+.main-content{
+  flex: 1;
 }
 
 a.page-link, span.page-link {
