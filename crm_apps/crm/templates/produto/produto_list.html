@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% load custom_filters %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -22,10 +23,12 @@
               {{ produto.nome }}
             </a>
           </td>
-          <td>{{ produto.descricao|default:"-" }}</td>
           <td>{{ produto.categoria }}</td>
-          <td>{{ produto.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
-          <td>{{ produto.data_edicao|date:"d/m/Y \à\s H:i" }}</td>
+          <td class="text-center">{{ produto.quantidade_estoque|default:"0" }}</td>
+          <td class="text-center">{{ produto.unidade_medida|default:"un" }}</td>
+          <td class="text-center">{{ produto.preco_custo|currency }}</td>
+          <td class="text-center">{{ produto.preco_venda|currency }}</td>
+          <td class="text-center">{{ produto.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
           <td>
             <div class="d-flex align-items-center">
               {% if produto.status == 'ativo' %}

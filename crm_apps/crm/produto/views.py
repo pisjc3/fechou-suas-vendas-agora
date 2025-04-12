@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.contrib import messages
 from crm_apps.common.ordering import sort_queryset
-from crm_apps.common.util.formats import format_date
+from crm_apps.common.util.formats import format_date, format_currency
 
 
 @method_decorator(login_required, name='dispatch')
@@ -40,6 +40,14 @@ class ProdutoListView(ListView):
             sort_param = 'data_criacao'
         if sort_param == 'data-de-edicao':
             sort_param = 'data_edicao'
+        if sort_param == 'qtd-em-estoque':
+            sort_param = 'quantidade_estoque'
+        if sort_param == 'unidade':
+            sort_param = 'unidade_medida'
+        if sort_param == 'preco-custo':
+            sort_param = 'preco_custo'
+        if sort_param == 'preco-venda':
+            sort_param = 'preco_venda'
 
         queryset_ordenado = sort_queryset(
             queryset_filtrado, sort_param, order_param)
@@ -49,13 +57,15 @@ class ProdutoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        headers = ["Nome", "Descrição", "Categoria",
-                   "Data de criação", "Data de edição", "Status"]
+        headers = ["Nome", "Categoria", "Qtd. em estoque", "Unidade", "Preço custo", "Preço venda",
+                   "Data de criação", "Status"]
 
         if self.request.user.is_superuser:
             headers.append("Empresa")
 
         context["headers"] = headers
+        context["text_center_columns"] = [
+            'Qtd. em estoque', 'Unidade', 'Preço custo', 'Preço venda', 'Data de criação']
         return context
 
 
@@ -89,6 +99,10 @@ class ProdutoDetailsView(DetailView):
             'Nome': produto.nome,
             'Descrição': produto.descricao,
             'Categoria': produto.categoria,
+            'Unidade': produto.unidade_medida,
+            'Quantidade em estoque': produto.quantidade_estoque,
+            'Preço de custo': format_currency(produto.preco_custo),
+            'Preço de venda': format_currency(produto.preco_venda),
             'Data de criação': format_date(produto.data_criacao),
             'Data de edição': format_date(produto.data_edicao),
             'Status': produto.get_status_display
@@ -123,6 +137,11 @@ class ProdutoCreateView(CreateView):
             nome=form.cleaned_data['nome'],
             descricao=form.cleaned_data.get('descricao'),
             categoria=form.cleaned_data['categoria'],
+            quantidade_inicial=form.cleaned_data.get(
+                'quantidade_inicial') or 0,
+            preco_custo=form.cleaned_data.get('preco_custo') or 0,
+            preco_venda=form.cleaned_data.get('preco_venda') or 0,
+            unidade_medida=form.cleaned_data['unidade_medida'],
             empresa=empresa,
             criado_por=usuario
         )
@@ -166,6 +185,8 @@ class ProdutoUpdateView(UpdateView):
             nome=form.cleaned_data['nome'],
             descricao=form.cleaned_data.get('descricao'),
             categoria=form.cleaned_data['categoria'],
+            preco_custo=form.cleaned_data['preco_custo'],
+            preco_venda=form.cleaned_data['preco_venda'],
             status=form.cleaned_data.get('status')
         )
 

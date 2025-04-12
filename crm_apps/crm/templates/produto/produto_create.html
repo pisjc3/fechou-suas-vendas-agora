@@ -12,6 +12,11 @@
             {% endfor %}
             {% include 'global/partials/_form_buttons.html' with cancel_url='/categoria/' %}
         </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                currencyMask('id_preco_venda'); 
+            });
+        </script>
     </div>
 </div>
 {% endblock %}

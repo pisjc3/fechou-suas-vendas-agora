@@ -15,3 +15,10 @@ def format_datetime(datetime_value):
         local_datetime = timezone.localtime(datetime_value)
         return local_datetime.strftime("%d/%m/%Y às %H:%M")
     return "-"
+
+
+def format_currency(value):
+    """Função para formatar os valores de moeda BR R$ X."""
+    if value is not None:
+        return f"R$ {value:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+    return "-"
