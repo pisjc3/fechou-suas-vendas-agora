@@ -55,6 +55,7 @@ class CategoriaListView(ListView):
             headers.append("Empresa")
 
         context["headers"] = headers
+        context["text_center_columns"] = ['Data de criação', 'Data de edição']
         return context
 
 

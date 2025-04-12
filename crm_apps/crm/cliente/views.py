@@ -57,6 +57,7 @@ class ClienteListView(ListView):
             headers.append("Empresa")
 
         context["headers"] = headers
+        context["text_center_columns"] = ['Telefone', 'Data de criação']
         return context
 
 

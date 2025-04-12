@@ -15,8 +15,8 @@
           <td><a href="{% url 'cliente_details' cliente.id %}" class="link-underline link-underline-opacity-0">{{ cliente.nome }}</a></td>
           <td>{{ cliente.data_nascimento|date:"d/m/Y"|default:"-"  }}</td>
           <td>{{ cliente.endereco|default:"-" }}</td>
-          <td>{{ cliente.telefone|default:"-" }}</td>
-          <td>{{ cliente.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
+          <td class="text-center">{{ cliente.telefone|default:"-" }}</td>
+          <td class="text-center">{{ cliente.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
           
           {% if request.user.is_superuser %}
             <td>{{ cliente.empresa }}</td>

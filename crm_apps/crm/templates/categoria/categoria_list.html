@@ -14,8 +14,8 @@
         <tr>
           <td><a href="{% url 'categoria_details' categoria.id %}" class="link-underline link-underline-opacity-0">{{ categoria.nome }}</a></td>
           <td>{{ categoria.descricao|default:"-" }}</td>
-          <td>{{ categoria.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
-          <td>{{ categoria.data_edicao|date:"d/m/Y \à\s H:i" }}</td>
+          <td class="text-center">{{ categoria.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
+          <td class="text-center">{{ categoria.data_edicao|date:"d/m/Y \à\s H:i" }}</td>
           
           {% if request.user.is_superuser %}
             <td>{{ categoria.empresa }}</td>
