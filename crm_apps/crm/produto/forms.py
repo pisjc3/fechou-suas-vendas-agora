@@ -8,7 +8,7 @@ from crm_apps.common.util.formats import format_currency
 class ProdutoCreationFormBase(forms.ModelForm):
     class Meta:
         model = Produto
-        fields = ['nome', 'descricao', 'categoria']
+        fields = ['nome', 'descricao', 'categoria', 'quantidade_estoque']
 
     nome = forms.CharField(
         required=True,
@@ -33,7 +33,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-select'}),
         label="Unidade de medida"
     )
-    quantidade_inicial = forms.DecimalField(
+    quantidade_estoque = forms.DecimalField(
         max_digits=10,
         decimal_places=2,
         required=False,
@@ -91,4 +91,4 @@ class ProdutoUpdateForm(ProdutoCreationFormBase):
     def __init__(self, *args, **kwargs):
         """remove campos não editáveis"""
         super().__init__(*args, **kwargs)
-        self.fields.pop('quantidade_inicial', None)
+        self.fields.pop('quantidade_estoque', None)

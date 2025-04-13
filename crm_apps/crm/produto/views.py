@@ -252,3 +252,62 @@ class ProdutosPorEmpresaView(View):
         produtos = Produto.objects.filter(
             empresa_id=empresa_id).values('id', 'nome')
         return JsonResponse(list(produtos), safe=False)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProdutoEstoqueAtualView(View):
+    def get(self, request, *args, **kwargs):
+        produto_id = request.GET.get('produto_id')
+
+        if not produto_id:
+            return JsonResponse({'erro': 'Parâmetro produto_id é obrigatório.'}, status=400)
+
+        try:
+            produto = Produto.objects.get(id=produto_id)
+            return JsonResponse({
+                'quantidade': str(produto.quantidade_estoque),
+                'unidade_medida': produto.get_unidade_medida_display()
+            })
+        except Produto.DoesNotExist:
+            return JsonResponse({'erro': 'Produto não encontrado.'}, status=404)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProdutoPrecosAtuaisView(View):
+    def get(self, request, *args, **kwargs):
+        produto_id = request.GET.get('produto_id')
+
+        if not produto_id:
+            return JsonResponse({'erro': 'Parâmetro produto_id é obrigatório.'}, status=400)
+
+        try:
+            produto = Produto.objects.get(id=produto_id)
+            return JsonResponse({
+                'preco_custo': str(produto.preco_custo),
+                'preco_venda': str(produto.preco_venda),
+            })
+        except Produto.DoesNotExist:
+            return JsonResponse({'erro': 'Produto não encontrado.'}, status=404)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProdutoDetailsAPIView(View):
+    def get(self, request, *args, **kwargs):
+        produto_id = request.GET.get('produto_id')
+
+        if not produto_id:
+            return JsonResponse({'erro': 'Parâmetro produto_id é obrigatório.'}, status=400)
+
+        try:
+            produto = Produto.objects.get(id=produto_id)
+            return JsonResponse({
+                'nome': produto.nome,
+                'descricao': produto.descricao,
+                'quantidade_estoque': str(produto.quantidade_estoque),
+                'preco_custo': str(produto.preco_custo),
+                'preco_venda': str(produto.preco_venda),
+                'unidade_medida': produto.get_unidade_medida_display(),
+                'empresa': produto.empresa.nome,
+            })
+        except Produto.DoesNotExist:
+            return JsonResponse({'erro': 'Produto não encontrado.'}, status=404)

@@ -1,0 +1,67 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-left align-items-center ">
+    <div style="min-width: 350px; max-width: 600px; width: 100%">
+        <h2 class="mb-4">Registrar compra</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.empresa %}
+                <div class="mb-3">
+                    <label for="{{ form.empresa.id_for_label }}" class="form-label">{{ form.empresa.label }}</label>
+                    {{ form.empresa }}
+                    {% if form.empresa.errors %}
+                        <div class="text-danger">{{ form.empresa.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            
+            <div class="mb-3">
+                <label for="{{ form.produto.id_for_label }}" class="form-label">{{ form.produto.label }}</label>
+                {{ form.produto }}
+                {% if form.produto.errors %}
+                    <div class="text-danger">{{ form.produto.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.quantidade.id_for_label }}" class="form-label">{{ form.quantidade.label }}</label>
+                {{ form.quantidade }}
+                {% if form.quantidade.errors %}
+                    <div class="text-danger">{{ form.quantidade.errors }}</div>
+                {% endif %}
+            </div>
+            
+            {% if form.novo_preco_custo %}
+            <div class="mb-3">
+                <label for="{{ form.novo_preco_custo.id_for_label }}" class="form-label">{{ form.novo_preco_custo.label }}</label>
+                {{ form.novo_preco_custo }}
+                {% if form.novo_preco_custo.errors %}
+                    <div class="text-danger">{{ form.novo_preco_custo.errors }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if form.novo_preco_venda %}
+            <div class="mb-3">
+                <label for="{{ form.novo_preco_venda.id_for_label }}" class="form-label">{{ form.novo_preco_venda.label }}</label>
+                {{ form.novo_preco_venda }}
+                {% if form.novo_preco_venda.errors %}
+                    <div class="text-danger">{{ form.novo_preco_venda.errors }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% include 'global/partials/_form_buttons.html' with cancel_url='/' %}
+        </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                fetchProdutosPorEmpresa(); 
+                fetchClientesPorEmpresa()
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}

@@ -61,6 +61,10 @@ a {
   font-weight: 500;
 }
 
+form small {
+  margin-left: 12px;
+}
+
 .main-content {
   flex: 1;
 }

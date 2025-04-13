@@ -1,23 +1,42 @@
-{% extends 'global/base.html' %}
-
-{% block content %}
-<div class="container ">
+{% extends 'global/base.html' %} {% block content %}
+<div class="container">
   <h1 class="mb-4">Bem-vindo à página inicial!</h1>
 
   <div class="row g-4">
-    <div class="col-md-4">
-      <a href="/cliente/" class="btn btn-primary w-100 p-4 fs-5 shadow rounded-3">
-        🧑 Clientes
+    <div class="col-md-6">
+      <a
+        href="/cliente/"
+        class="btn btn-primary w-100 p-5 fs-5 shadow rounded-3"
+      >
+        🧑 <strong>Clientes</strong><br />
+        <small>Cadastro e gerenciamento de clientes</small>
       </a>
     </div>
-    <div class="col-md-4">
-      <a href="/produto/" class="btn btn-success w-100 p-4 fs-5 shadow rounded-3">
-        📦 Produtos
+    <div class="col-md-6">
+      <a
+        href="/produto/"
+        class="btn btn-danger w-100 p-5 fs-5 shadow rounded-3"
+      >
+        📦 <strong>Produtos</strong><br />
+        <small>Controle e organização dos produtos</small>
       </a>
     </div>
-    <div class="col-md-4">
-      <a href="/cliente/" class="btn btn-warning w-100 p-4 fs-5 shadow rounded-3">
-        💰 Vendas
+    <div class="col-md-6">
+      <a
+        href="/movimentacao/nova-venda/"
+        class="btn btn-success w-100 p-5 fs-5 shadow rounded-3"
+      >
+        💸 <strong>Vendas</strong><br />
+        <small>Registrar saída de produtos do estoque</small>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <a
+        href="/movimentacao/nova-compra/"
+        class="btn btn-warning w-100 p-5 fs-5 shadow rounded-3"
+      >
+        🛒 <strong>Compras</strong><br />
+        <small>Registrar entrada de produtos no estoque</small>
       </a>
     </div>
   </div>

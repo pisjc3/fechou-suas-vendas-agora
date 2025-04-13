@@ -4,6 +4,7 @@ from crm_apps.crm.empresa.models import Empresa
 from crm_apps.crm.cliente.models import Cliente
 from crm_apps.crm.categoria.models import Categoria
 from crm_apps.crm.produto.models import Produto
+from crm_apps.crm.movimentacao.models import Movimentacao
 from django.contrib import admin
 
 
@@ -41,4 +42,12 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('id', 'nome', 'descricao',
                     'categoria', 'empresa', 'criado_por', 'status')
     search_fields = ('nome', 'descricao', 'categoria', 'empresa')
+    ordering = ('-id',)
+
+
+@admin.register(Movimentacao)
+class MovimentacaoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'produto', 'tipo',
+                    'quantidade', 'preco_unitario', 'cliente', 'empresa', 'novo_preco_custo', 'novo_preco_venda', 'criado_por',)
+    search_fields = ('produto', 'tipo', 'cliente', 'empresa')
     ordering = ('-id',)

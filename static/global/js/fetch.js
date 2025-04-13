@@ -2,6 +2,8 @@ function fetchProdutosPorEmpresa() {
   const empresaSelect = document.getElementById("id_empresa");
   const produtoSelect = document.getElementById("id_produto");
 
+  if (!empresaSelect) return;
+
   empresaSelect.addEventListener("change", function () {
     const empresaId = this.value;
 
@@ -36,6 +38,8 @@ function fetchProdutosPorEmpresa() {
 function fetchClientesPorEmpresa() {
   const empresaSelect = document.getElementById("id_empresa");
   const clienteSelect = document.getElementById("id_cliente");
+
+  if (!empresaSelect) return;
 
   empresaSelect.addEventListener("change", function () {
     const empresaId = this.value;
