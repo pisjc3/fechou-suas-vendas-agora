@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.http import JsonResponse
 from .models import Produto
 from .filters import ProdutoFilter
 from .forms import ProdutoCreationAdminForm, ProdutoCreationFormBase, ProdutoUpdateForm
@@ -223,6 +224,7 @@ class ProdutoChangeStatus(View):
         return self.request.META.get('HTTP_REFERER', reverse_lazy('produto_list'))
 
 
+@method_decorator(login_required, name='dispatch')
 class ProdutoDeleteView(DeleteView):
     model = Produto
     template_name = "produtos/produto_confirm_delete.html"
@@ -241,3 +243,12 @@ class ProdutoDeleteView(DeleteView):
             messages.error(
                 request, f'Ocorreu um erro ao excluir o produto "{nome_produto}".')
             return redirect(self.success_url)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProdutosPorEmpresaView(View):
+    def get(self, request, *args, **kwargs):
+        empresa_id = request.GET.get('empresa_id')
+        produtos = Produto.objects.filter(
+            empresa_id=empresa_id).values('id', 'nome')
+        return JsonResponse(list(produtos), safe=False)

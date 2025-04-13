@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
 from crm_apps.crm.cliente.models import Cliente
 from crm_apps.crm.util.selectors import get_usuario_empresa, get_empresa_do_usuario
 from .forms import ClienteCreationFormBase, ClienteCreationAdminForm, ClienteUpdateForm
@@ -183,3 +184,17 @@ class ClienteUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('cliente_details', kwargs={'pk': self.object.pk})
+
+
+@method_decorator(login_required, name='dispatch')
+class ClientesPorEmpresaView(View):
+    def get(self, request, *args, **kwargs):
+        empresa_id = request.GET.get('empresa_id')
+
+        if not empresa_id:
+            return JsonResponse({'error': 'Empresa ID não fornecido'}, status=400)
+
+        clientes = Cliente.objects.filter(
+            empresa_id=empresa_id).values('id', 'nome')
+
+        return JsonResponse(list(clientes), safe=False)
