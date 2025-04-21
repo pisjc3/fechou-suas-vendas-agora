@@ -78,6 +78,10 @@ class VendaListView(MovimentacaoListView):
         headers = context["headers"]
         if "Tipo" in headers:
             headers.remove("Tipo")
+        if "Novo preço custo" in headers:
+            headers.remove("Novo preço custo")
+        if "Novo preço venda" in headers:
+            headers.remove("Novo preço venda")
         context["headers"] = headers
 
         text_center_columns = context["text_center_columns"]
@@ -102,6 +106,10 @@ class CompraListView(MovimentacaoListView):
         headers = context["headers"]
         if "Tipo" in headers:
             headers.remove("Tipo")
+        if "Cliente" in headers:
+            headers.remove("Cliente")
+        if "Preço un." in headers:
+            headers.remove("Preço un.")
         context["headers"] = headers
 
         text_center_columns = context["text_center_columns"]

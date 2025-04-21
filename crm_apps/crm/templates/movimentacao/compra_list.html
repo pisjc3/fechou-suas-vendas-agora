@@ -24,18 +24,8 @@
             </a>
           </td> 
           <td class="text-center">{{ movimentacao.quantidade|default:"un" }}</td>
-          <td class="text-center">{{ movimentacao.preco_unitario|currency }}</td>
           <td class="text-center">{{ movimentacao.novo_preco_custo|currency }}</td>
           <td class="text-center">{{ movimentacao.novo_preco_venda|currency }}</td>
-          <td>
-            {% if movimentacao.cliente %}
-                <a href="{% url 'cliente_details' movimentacao.cliente.id %}" class="link-underline link-underline-opacity-0">
-                    {{ movimentacao.cliente }}
-                </a>
-            {% else %}
-                -
-            {% endif %}
-          </td> 
           {% if movimentao.empresa %}
             <td>{{ movimentacao.empresa }}</td>
           {% endif %}
