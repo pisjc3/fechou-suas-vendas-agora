@@ -1,0 +1,144 @@
+{% extends 'global/base.html' %} {% block content %}
+<div class="container">
+  <h1 class="mb-4">Análisar 📊</h1>
+
+  <!-- Filtros Globais -->
+  <div class="d-flex align-items-end mb-5">
+    <div class="me-3">
+      <label for="dataInicio" class="form-label">Data Início</label>
+      <input type="date" id="dataInicio" class="form-control" />
+    </div>
+    <div class="me-3">
+      <label for="dataFim" class="form-label">Data Fim</label>
+      <input type="date" id="dataFim" class="form-control" />
+    </div>
+    <div>
+      <button onclick="filtrarTodosGraficos()" class="btn btn-primary">
+        Filtrar
+      </button>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h3>Clientes cadastrados por dia</h3>
+    <canvas
+      id="clientesChart"
+      role="img"
+      aria-label="Gráfico de clientes cadastrados por dia"
+      aria-describedby="clientesChartDesc"
+    ></canvas>
+  </div>
+
+  <div class="mb-5">
+    <h3>Movimentações por dia</h3>
+    <canvas
+      id="movimentacoesChart"
+      role="img"
+      aria-label="Gráfico de movimentações por dia"
+      aria-describedby="movimentacoesChartDesc"
+    ></canvas>
+  </div>
+
+  <div class="mb-5">
+    <h3>Quantidade de produtos movimentados</h3>
+    <canvas
+      id="produtosChart"
+      role="img"
+      aria-label="Gráfico de produtos movimentados"
+      aria-describedby="produtosChartDesc"
+    ></canvas>
+  </div>
+
+  <div class="mb-5">
+    <h3>Vendas por cliente</h3>
+    <canvas
+      id="vendasPorClienteData"
+      role="img"
+      aria-label="Gráfico de vendas por cliente"
+      aria-describedby="vendasPorClienteDataDesc"
+    ></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const today = new Date();
+    const priorDate = new Date();
+    priorDate.setDate(today.getDate() - 30);
+
+    const formatDate = (date) => date.toISOString().split("T")[0];
+
+    document.getElementById("dataInicio").value = formatDate(priorDate);
+    document.getElementById("dataFim").value = formatDate(today);
+  });
+</script>
+
+<script>
+  let charts = {};
+
+  window.onload = function () {
+    const clientesData = {{ clientes_data|safe }};
+    const movimentacoesData = {{ movimentacoes_data|safe }};
+    const produtosData = {{ produtos_data|safe }};
+    const vendasPorClienteData= {{ vendas_por_cliente_data|safe }};
+
+    charts["cliente"] = criarGraficoBar("clientesChart", clientesData.labels, [{
+      label: 'Clientes',
+      data: clientesData.values,
+      backgroundColor: 'rgba(54, 162, 235, 0.6)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]);
+
+    charts["movimentacao"] = criarGraficoLine("movimentacoesChart", movimentacoesData.labels, [
+    {
+      label: 'Vendas',
+      data: movimentacoesData.vendas,
+      borderColor: "#198754",
+      backgroundColor: "rgba(25, 135, 84, 0.2)",
+      tension: 0.1,
+      fill: false
+    },
+    {
+      label: 'Compras',
+      data: movimentacoesData.compras,
+      borderColor: "#ffc107",
+      backgroundColor: "rgba(255, 193, 7, 0.2)",
+      tension: 0.1,
+      fill: false
+    }
+    ]);
+
+    charts["produto"] = criarGraficoBar("produtosChart", produtosData.labels, [{
+      label: 'Vendas',
+      data: produtosData.vendas,
+      borderColor: "#198754",
+      backgroundColor: "rgba(25, 135, 84, 0.2)",
+      tension: 0.1,
+      fill: false
+    },
+    {
+      label: 'Compras',
+      data: produtosData.compras,
+      borderColor: "#ffc107",
+      backgroundColor: "rgba(255, 193, 7, 0.2)",
+      tension: 0.1,
+      fill: false
+    }]);
+
+    charts["vendas_por_cliente"] = criarGraficoBar(
+      "vendasPorClienteData",
+      vendasPorClienteData.labels,
+      [{
+        label: 'Compras por Cliente',
+        data: vendasPorClienteData.values,
+        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+        borderColor:     'rgba(255, 159, 64, 1)',
+        borderWidth: 1
+      }]
+    );
+  };
+</script>
+{% endblock %}
