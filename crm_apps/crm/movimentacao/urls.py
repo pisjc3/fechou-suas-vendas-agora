@@ -1,7 +1,10 @@
 from django.urls import path
-from .views import VendaCreateView, CompraCreateView
+from .views import VendaCreateView, CompraCreateView, MovimentacaoListView, VendaListView, CompraListView
 
 urlpatterns = [
-    path('nova-venda/', VendaCreateView.as_view(), name='venda_form'),
-    path('nova-compra/', CompraCreateView.as_view(), name='compra_form'),
+    path('', MovimentacaoListView.as_view(), name='movimentacao_list'),
+    path('venda/', VendaListView.as_view(), name='venda_list'),
+    path('compra/', CompraListView.as_view(), name='compra_list'),
+    path('nova-venda/', VendaCreateView.as_view(), name='venda_create'),
+    path('nova-compra/', CompraCreateView.as_view(), name='compra_create'),
 ]
