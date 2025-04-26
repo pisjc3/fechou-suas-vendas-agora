@@ -2,13 +2,13 @@ from django import forms
 from .models import Produto
 from crm_apps.crm.empresa.models import Empresa
 from crm_apps.crm.categoria.models import Categoria
-from crm_apps.common.util.formats import format_currency
 
 
 class ProdutoCreationFormBase(forms.ModelForm):
     class Meta:
         model = Produto
-        fields = ['nome', 'descricao', 'categoria', 'quantidade_estoque']
+        fields = ['nome', 'descricao', 'categoria',
+                  'unidade_medida', 'quantidade_estoque']
 
     nome = forms.CharField(
         required=True,
@@ -37,7 +37,12 @@ class ProdutoCreationFormBase(forms.ModelForm):
         max_digits=10,
         decimal_places=2,
         required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Informe o valor'}),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Informe o valor',
+                'min': 0,
+            }
+        ),
         label="Quantidade inicial em estoque",
         help_text="Opcional"
     )
@@ -64,7 +69,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
 class ProdutoCreationAdminForm(ProdutoCreationFormBase):
     class Meta:
         model = Produto
-        fields = ProdutoCreationFormBase.Meta.fields + ['empresa']
+        fields = ['empresa'] + ProdutoCreationFormBase.Meta.fields
 
     empresa = forms.ModelChoiceField(
         queryset=Empresa.objects.all(),

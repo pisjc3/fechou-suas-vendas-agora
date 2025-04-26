@@ -56,12 +56,21 @@
 
             {% include 'global/partials/_form_buttons.html' with cancel_url='/movimentacao/compra/' %}
         </form>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                fetchProdutosPorEmpresa(); 
-                fetchClientesPorEmpresa()
-            });
-        </script>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function() {
+      const quantidadeInput = document.getElementById("id_quantidade");
+  
+      onInputProdutoChange(async (produtoId) => {
+        const produto = await fetchProdutoDetails(produtoId);
+        ajustarStepQuantidadePorValor(produto.unidade_medida, quantidadeInput);
+      });
+  
+      {% if request.user.is_superuser %}
+        await fetchProdutosPorEmpresa(); 
+      {% endif %}
+    });
+  </script>
 {% endblock %}

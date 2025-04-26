@@ -28,6 +28,7 @@ class MovimentacaoFormBase(forms.ModelForm):
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'placeholder': 'Informe a quantidade',
+            'min': 0,
         }),
         label='Quantidade'
     )

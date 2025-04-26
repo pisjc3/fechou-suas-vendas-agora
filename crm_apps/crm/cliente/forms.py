@@ -36,13 +36,14 @@ class ClienteCreationFormBase(forms.ModelForm):
 class ClienteCreationAdminForm(ClienteCreationFormBase):
     class Meta:
         model = Cliente
-        fields = ClienteCreationFormBase.Meta.fields + ['empresa']
+        fields = ['empresa'] + ClienteCreationFormBase.Meta.fields
 
     empresa = forms.ModelChoiceField(
         queryset=Empresa.objects.all(),
         required=True,
-        widget=forms.Select(),
-        label="Empresa"
+        widget=forms.Select(attrs={'class': 'form-select'}),
+        label="Empresa",
+        empty_label="Escolha a empresa"
     )
 
 

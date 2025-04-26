@@ -1,61 +1,66 @@
-{% extends 'global/base.html' %} {% block content %}
+{% extends 'global/base.html' %} 
+{% block content %}
 <div class="container d-flex justify-content-left align-items-center">
   <div style="min-width: 350px; max-width: 600px; width: 100%">
     <h2 class="mb-4">Registrar venda</h2>
 
     <form method="POST">
-      {% csrf_token %} {% if form.empresa %}
-      <div class="mb-3">
-        <label for="{{ form.empresa.id_for_label }}" class="form-label"
-          >{{ form.empresa.label }}</label
-        >
-        {{ form.empresa }} {% if form.empresa.errors %}
-        <div class="text-danger">{{ form.empresa.errors }}</div>
-        {% endif %}
-      </div>
+      {% csrf_token %} 
+      {% if form.empresa %}
+        <div class="mb-3">
+          <label for="{{ form.empresa.id_for_label }}" class="form-label">
+            {{ form.empresa.label }}
+          </label>
+          {{ form.empresa }} 
+          {% if form.empresa.errors %}
+            <div class="text-danger">{{ form.empresa.errors }}</div>
+          {% endif %}
+        </div>
       {% endif %}
 
       <div class="mb-3">
-        <label for="{{ form.produto.id_for_label }}" class="form-label"
-          >{{ form.produto.label }}</label
-        >
-        {{ form.produto }} {% if form.produto.errors %}
-        <div class="text-danger">{{ form.produto.errors }}</div>
+        <label for="{{ form.produto.id_for_label }}" class="form-label">
+          {{ form.produto.label }}
+        </label>
+        {{ form.produto }} 
+        {% if form.produto.errors %}
+          <div class="text-danger">{{ form.produto.errors }}</div>
         {% endif %}
       </div>
 
       <div class="mb-3">
-        <label for="{{ form.quantidade.id_for_label }}" class="form-label"
-          >{{ form.quantidade.label }}</label
-        >
+        <label for="{{ form.quantidade.id_for_label }}" class="form-label">
+          {{ form.quantidade.label }}
+          </label>
         {{ form.quantidade }}
         {% comment %} <small id="quantidade-help" class="form-text">
           Selecione um produto para ver a quantidade em estoque.
         </small> {% endcomment %}
         {% if form.quantidade.errors %}
-        <div class="text-danger">{{ form.quantidade.errors }}</div>
+          <div class="text-danger">{{ form.quantidade.errors }}</div>
         {% endif %}
       </div>
 
       <div class="mb-3">
-        <label for="{{ form.preco_unitario.id_for_label }}" class="form-label"
-          >{{ form.preco_unitario.label }}</label
-        >
+        <label for="{{ form.preco_unitario.id_for_label }}" class="form-label">
+          {{ form.preco_unitario.label }}
+        </label>
         {{ form.preco_unitario }}
         {% comment %} <small id="preco-unitario-help" class="form-text">
           Selecione um produto para ver o preço atual.
         </small> {% endcomment %}
         {% if form.preco_unitario.errors %}
-        <div class="text-danger">{{ form.preco_unitario.errors }}</div>
+          <div class="text-danger">{{ form.preco_unitario.errors }}</div>
         {% endif %}
       </div>
 
       <div class="mb-3">
-        <label for="{{ form.cliente.id_for_label }}" class="form-label"
-          >{{ form.cliente.label }}</label
-        >
-        {{ form.cliente }} {% if form.cliente.errors %}
-        <div class="text-danger">{{ form.cliente.errors }}</div>
+        <label for="{{ form.cliente.id_for_label }}" class="form-label">
+          {{ form.cliente.label }}
+        </label>
+        {{ form.cliente }} 
+        {% if form.cliente.errors %}
+          <div class="text-danger">{{ form.cliente.errors }}</div>
         {% endif %}
       </div>
 
@@ -65,9 +70,18 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    fetchProdutosPorEmpresa();
-    fetchClientesPorEmpresa();
+  document.addEventListener("DOMContentLoaded", async function() {
+    const quantidadeInput = document.getElementById("id_quantidade");
+
+    onInputProdutoChange(async (produtoId) => {
+      const produto = await fetchProdutoDetails(produtoId);
+      ajustarStepQuantidadePorValor(produto.unidade_medida, quantidadeInput);
+    });
+
+    {% if request.user.is_superuser %}
+      await fetchClientesPorEmpresa();
+      await fetchProdutosPorEmpresa(); 
+    {% endif %}
   });
 </script>
 
