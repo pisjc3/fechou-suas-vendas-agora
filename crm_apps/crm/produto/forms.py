@@ -39,7 +39,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         required=False,
         widget=forms.NumberInput(
             attrs={
-                'placeholder': 'Informe o valor',
+                'placeholder': 'Informe a quantidade',
                 'min': 0,
             }
         ),
