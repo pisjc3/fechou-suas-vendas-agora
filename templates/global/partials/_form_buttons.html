@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between gap-2">
+<div class="d-flex justify-content-between gap-2 mt-4">
     <a href="{{ cancel_url }}" class="btn btn-danger w-100">
         {{ cancel_label|default:"Cancelar" }}
     </a>
@@ -6,3 +6,4 @@
         {{ confirm_label|default:"Confirmar" }}
     </button>
 </div>
+{% include 'global/partials/_info_campos_obrigatorios.html' %}

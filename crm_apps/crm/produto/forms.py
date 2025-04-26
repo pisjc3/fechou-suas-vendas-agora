@@ -44,7 +44,6 @@ class ProdutoCreationFormBase(forms.ModelForm):
             }
         ),
         label="Quantidade inicial em estoque",
-        help_text="Opcional"
     )
     preco_custo = forms.DecimalField(
         max_digits=10,
@@ -53,7 +52,6 @@ class ProdutoCreationFormBase(forms.ModelForm):
         widget=forms.NumberInput(
             attrs={'placeholder': 'Informe o valor de custo'}),
         label="Preço inicial de Custo (R$)",
-        help_text="Opcional"
     )
     preco_venda = forms.DecimalField(
         max_digits=10,
@@ -62,7 +60,6 @@ class ProdutoCreationFormBase(forms.ModelForm):
         widget=forms.NumberInput(
             attrs={'placeholder': 'Informe o valor de venda'}),
         label="Preço inicial de venda (R$)",
-        help_text="Opcional"
     )
 
 

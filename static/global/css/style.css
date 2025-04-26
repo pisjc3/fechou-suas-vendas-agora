@@ -87,6 +87,13 @@ footer {
   overflow: visible;
 }
 
+.helper-text {
+    font-size: 0.875rem;
+    color: #6c757d; 
+    margin: 0.25rem 0 0 0.875rem;
+
+}
+
 th,
 th * {
   font-size: 1rem;
