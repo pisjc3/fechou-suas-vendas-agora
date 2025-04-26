@@ -14,7 +14,7 @@ class MovimentacaoFormBase(forms.ModelForm):
         ]
 
     produto = forms.ModelChoiceField(
-        queryset=Produto.objects.all(),
+        queryset=Produto.objects.filter(status='ativo'),
         required=True,
         widget=forms.Select(attrs={'class': 'form-select'}),
         label='Produto',
