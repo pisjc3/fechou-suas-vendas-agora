@@ -1,6 +1,19 @@
 {% extends 'global/base.html' %} {% block content %}
 <div class="container">
-  <h1 class="mb-4">Bem-vindo à página inicial!</h1>
+
+  <h1 class="mb-4">
+    {% if request.user.is_superuser %}
+      Bem-vindo, {{ request.user.username }}
+    {% else %}
+      {% if request.user.empresas.all %}
+        {{ request.user.empresas.all.0.empresa.nome }},
+      {% else %}
+        Empresa,
+      {% endif %}
+      bem-vindo(a) à página inicial!
+    {% endif %}
+  </h1>
+  
 
   <div class="row g-4">
     <div class="col-md-6">
