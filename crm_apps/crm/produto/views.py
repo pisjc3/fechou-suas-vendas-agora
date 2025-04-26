@@ -138,8 +138,8 @@ class ProdutoCreateView(CreateView):
             nome=form.cleaned_data['nome'],
             descricao=form.cleaned_data.get('descricao'),
             categoria=form.cleaned_data['categoria'],
-            quantidade_inicial=form.cleaned_data.get(
-                'quantidade_inicial') or 0,
+            quantidade_estoque=form.cleaned_data.get(
+                'quantidade_estoque') or 0,
             preco_custo=form.cleaned_data.get('preco_custo') or 0,
             preco_venda=form.cleaned_data.get('preco_venda') or 0,
             unidade_medida=form.cleaned_data['unidade_medida'],

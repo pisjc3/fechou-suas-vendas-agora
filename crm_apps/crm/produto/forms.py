@@ -52,7 +52,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         required=False,
         widget=forms.NumberInput(
             attrs={'placeholder': 'Informe o valor de custo'}),
-        label="Preço inicial de Custo",
+        label="Preço inicial de Custo (R$)",
         help_text="Opcional"
     )
     preco_venda = forms.DecimalField(
@@ -61,7 +61,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         required=False,
         widget=forms.NumberInput(
             attrs={'placeholder': 'Informe o valor de venda'}),
-        label="Preço inicial de venda",
+        label="Preço inicial de venda (R$)",
         help_text="Opcional"
     )
 
@@ -83,8 +83,8 @@ class ProdutoCreationAdminForm(ProdutoCreationFormBase):
 class ProdutoUpdateForm(ProdutoCreationFormBase):
     class Meta:
         model = Produto
-        fields = ['nome', 'descricao', 'categoria',
-                  'preco_venda', 'preco_custo', 'status']
+        fields = ['nome', 'descricao', 'categoria', 'unidade_medida',
+                  'preco_custo', 'preco_venda', 'status']
 
     status = forms.ChoiceField(
         choices=Produto.Status.choices,
@@ -94,6 +94,9 @@ class ProdutoUpdateForm(ProdutoCreationFormBase):
     )
 
     def __init__(self, *args, **kwargs):
-        """remove campos não editáveis"""
         super().__init__(*args, **kwargs)
+        self.fields['preco_custo'].label = "Novo preço de Custo (R$)"
+        self.fields['preco_venda'].label = "Novo preço de Venda (R$)"
+
+        """remove campos não editáveis"""
         self.fields.pop('quantidade_estoque', None)
