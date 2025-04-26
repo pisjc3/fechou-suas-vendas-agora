@@ -2,24 +2,36 @@
 <div class="container">
   <h1 class="mb-4">Análisar 📊</h1>
 
-  <!-- Filtros Globais -->
-  <div class="d-flex align-items-end mb-5">
-    <div class="me-3">
-      <label for="dataInicio" class="form-label">Data Início</label>
-      <input type="date" id="dataInicio" class="form-control" />
+  <div class="mb-5" style="width: 40%">
+    <div class="mb-3">
+      <label for="graficoSelect" class="form-label">Escolha um gráfico:</label>
+      <select id="graficoSelect" class="form-select">
+        <option value="todos">Todos</option>
+        <option value="cliente" selected>Clientes cadastrados por dia</option>
+        <option value="movimentacao">Movimentações por dia</option>
+        <option value="produto">Quantidade de produtos movimentados</option>
+        <option value="vendas_por_cliente">Vendas por cliente</option>
+      </select>
     </div>
-    <div class="me-3">
-      <label for="dataFim" class="form-label">Data Fim</label>
-      <input type="date" id="dataFim" class="form-control" />
-    </div>
-    <div>
-      <button onclick="filtrarTodosGraficos()" class="btn btn-primary">
-        Filtrar
-      </button>
+
+    <div class="me-3 d-flex align-items-end">
+      <div class="me-3">
+        <label for="dataInicio" class="form-label">Data Início</label>
+        <input type="date" id="dataInicio" class="form-control" />
+      </div>
+      <div class="me-3">
+        <label for="dataFim" class="form-label">Data Fim</label>
+        <input type="date" id="dataFim" class="form-control" />
+      </div>
+      <div>
+        <button onclick="filtrarTodosGraficos()" class="btn btn-primary">
+          Filtrar
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="mb-5">
+  <div id="grafico_cliente" class="grafico">
     <h3>Clientes cadastrados por dia</h3>
     <canvas
       id="clientesChart"
@@ -29,7 +41,7 @@
     ></canvas>
   </div>
 
-  <div class="mb-5">
+  <div id="grafico_movimentacao" class="grafico" style="display: none">
     <h3>Movimentações por dia</h3>
     <canvas
       id="movimentacoesChart"
@@ -39,7 +51,7 @@
     ></canvas>
   </div>
 
-  <div class="mb-5">
+  <div id="grafico_produto" class="grafico" style="display: none">
     <h3>Quantidade de produtos movimentados</h3>
     <canvas
       id="produtosChart"
@@ -49,7 +61,7 @@
     ></canvas>
   </div>
 
-  <div class="mb-5">
+  <div id="grafico_vendas_por_cliente" class="grafico" style="display: none">
     <h3>Vendas por cliente</h3>
     <canvas
       id="vendasPorClienteData"
@@ -76,9 +88,11 @@
 </script>
 
 <script>
-  let charts = {};
-
   window.onload = function () {
+    selecionarAnalisarGrafico()
+    
+    let charts = {};
+
     const clientesData = {{ clientes_data|safe }};
     const movimentacoesData = {{ movimentacoes_data|safe }};
     const produtosData = {{ produtos_data|safe }};

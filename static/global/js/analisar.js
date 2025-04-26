@@ -90,3 +90,26 @@ function criarGraficoBar(canvasId, labels, datasets) {
     },
   });
 }
+
+function selecionarAnalisarGrafico(){
+  const graficoSelect = document.getElementById('graficoSelect');
+
+  graficoSelect.addEventListener('change', function () {
+    const selected = graficoSelect.value;
+    const sections = document.querySelectorAll('.grafico');
+
+    if (selected === 'todos') {
+      sections.forEach(section => {
+        section.style.display = 'block';
+      });
+    } else {
+      sections.forEach(section => {
+        if (section.id === `grafico_${selected}`) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+  });
+}
