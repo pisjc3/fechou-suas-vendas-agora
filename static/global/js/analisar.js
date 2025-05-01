@@ -50,8 +50,30 @@ function criarGraficoLine(canvasId, labels, datasets) {
       datasets: datasets,
     },
     options: {
+      responsive: true,
       tension: 0.1,
       fill: false,
+      scales: {
+        x: {
+          ticks: {
+            minRotation: 45,
+            maxRotation: 45,
+            callback: function (value, index, values) {
+              const maxLength = 10; 
+              let labelValue = value; 
+
+              if (Array.isArray(labels) && labels[index]) {
+                labelValue = labels[index];
+              }
+
+              if (labelValue.length > maxLength) {
+                return labelValue.substring(0, maxLength) + "...";
+              }
+              return labelValue;
+            },
+          },
+        },
+      },
     },
   });
 }

@@ -62,6 +62,7 @@ a {
 }
 
 form small {
+  display: block;
   margin-left: 12px;
 }
 
@@ -88,9 +89,9 @@ footer {
 }
 
 .helper-text {
-    font-size: 0.875rem;
-    color: #6c757d; 
-    margin: 0.25rem 0 0 0.875rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0.25rem 0 0 0.875rem;
 }
 
 .helper-text.text-danger {
