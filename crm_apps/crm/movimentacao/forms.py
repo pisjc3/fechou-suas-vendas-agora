@@ -3,6 +3,7 @@ from .models import Movimentacao
 from crm_apps.crm.produto.models import Produto
 from crm_apps.crm.cliente.models import Cliente
 from crm_apps.crm.empresa.models import Empresa
+from crm_apps.crm.util.selectors import get_empresa_do_usuario
 
 
 class MovimentacaoFormBase(forms.ModelForm):
@@ -14,7 +15,7 @@ class MovimentacaoFormBase(forms.ModelForm):
         ]
 
     produto = forms.ModelChoiceField(
-        queryset=Produto.objects.filter(status='ativo'),
+        queryset=Produto.objects.none(),
         required=True,
         widget=forms.Select(attrs={'class': 'form-select'}),
         label='Produto',
@@ -32,6 +33,26 @@ class MovimentacaoFormBase(forms.ModelForm):
         }),
         label='Quantidade'
     )
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+        if request:
+            usuario = request.user
+
+            if usuario.is_superuser:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo'
+                )
+                return
+
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+            if empresa:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo',
+                    empresa=empresa
+                )
 
 
 class VendaForm(MovimentacaoFormBase):

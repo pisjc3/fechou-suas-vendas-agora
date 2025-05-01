@@ -127,6 +127,11 @@ class VendaCreateView(CreateView):
     form_class = VendaForm
     template_name = 'movimentacao/venda_create.html'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def get_form_class(self):
         return VendaAdminForm if self.request.user.is_superuser else VendaForm
 
@@ -170,9 +175,14 @@ class VendaCreateView(CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class CompraCreateView(CreateView):
-    model = Movimentacao
+    model = CompraForm
     success_url = reverse_lazy('compra_list')
     template_name = 'movimentacao/compra_create.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_form_class(self):
         return CompraAdminForm if self.request.user.is_superuser else CompraForm
