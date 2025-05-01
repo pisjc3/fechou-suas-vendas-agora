@@ -73,9 +73,10 @@ class CompraForm(MovimentacaoFormBase):
         required=False,
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Novo preço de custo'
+            'placeholder': 'Novo preço de custo',
+            'min': 0
         }),
-        label='Novo preço de custo'
+        label='Novo preço de custo (R$)'
     )
 
     novo_preco_venda = forms.DecimalField(
@@ -84,9 +85,10 @@ class CompraForm(MovimentacaoFormBase):
         required=False,
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Novo preço de venda'
+            'placeholder': 'Novo preço de venda',
+            'min': 0
         }),
-        label='Novo preço de venda'
+        label='Novo preço de venda (R$)'
     )
 
 

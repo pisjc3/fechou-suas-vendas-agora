@@ -50,7 +50,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         decimal_places=2,
         required=False,
         widget=forms.NumberInput(
-            attrs={'placeholder': 'Informe o valor de custo'}),
+            attrs={'placeholder': 'Informe o valor de custo', 'min': 0}),
         label="Preço inicial de Custo (R$)",
     )
     preco_venda = forms.DecimalField(
@@ -58,7 +58,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
         decimal_places=2,
         required=False,
         widget=forms.NumberInput(
-            attrs={'placeholder': 'Informe o valor de venda'}),
+            attrs={'placeholder': 'Informe o valor de venda', 'min': 0}),
         label="Preço inicial de venda (R$)",
     )
 
