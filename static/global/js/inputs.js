@@ -1,8 +1,11 @@
 function ajustarStepInputQuantidade(unidadeMedidaInput, quantidadeInput) {
-  const unidadeMedidaValor =
-    unidadeMedidaInput.options[unidadeMedidaInput.selectedIndex].text;
+  if (!unidadeMedidaInput) return;
+  unidadeMedidaInput.addEventListener("change", () => {
+    const unidadeMedidaValor =
+      unidadeMedidaInput.options[unidadeMedidaInput.selectedIndex].text;
 
-  ajustarStepQuantidadePorValor(unidadeMedidaValor, quantidadeInput);
+    ajustarStepQuantidadePorValor(unidadeMedidaValor, quantidadeInput);
+  });
 }
 
 function ajustarStepQuantidadePorValor(unidadeMedidaValor, quantidadeInput) {
@@ -18,7 +21,7 @@ function ajustarStepQuantidadePorValor(unidadeMedidaValor, quantidadeInput) {
     quantidadeInput.step = "0.01";
   }
 
-  quantidadeInput.value = ""; 
+  quantidadeInput.value = "";
 }
 
 function onInputProdutoChange(callbackFunction) {
