@@ -12,7 +12,7 @@
   <table class="table table-striped">
     
     <!-- TABLE_HEADER -->
-    {% include 'global/partials/_table_header.html' with headers=headers request=request show_actions="true" %}
+    {% include 'global/partials/_table_header.html' with headers=headers request=request %}
 
     <tbody>
       {% for movimentacao in object_list %}
@@ -24,7 +24,7 @@
             </td> 
             <td class="text-center">
                 {% if movimentacao.tipo == 'compra' %}
-                    <span class="text-success fw-bold">{{ movimentacao.get_tipo_display }}</span>
+                    <span class="text-success fw-bold">Entrada</span>
                 {% elif movimentacao.tipo == 'venda' %}
                     <span class="text-warning fw-bold">{{ movimentacao.get_tipo_display }}</span>
                 {% endif %}
@@ -46,25 +46,9 @@
                 <td>{{ movimentacao.empresa }}</td>
             {% endif %}
             <td class="text-center">{{ movimentacao.data_criacao|date:"d/m/Y \à\s H:i" }}</td>
-            {% comment %} <td>
-                <div class="d-flex align-items-center">
-                {% if movimentacao.status == 'ativo' %}
-                    <i class="bi bi-check-circle-fill text-success me-1"></i>
-                    {{ movimentacao.get_status_display }}
-                {% elif movimentacao.status == 'inativo' %}
-                    <i class="bi bi-x-circle-fill text-danger me-1"></i>
-                    {{ movimentacao.get_status_display }}
-                {% endif %}
-                </div>
-            </td> {% endcomment %}
             {% if request.user.is_superuser %}
                 <td>{{ movimentacao.empresa }}</td>
-            {% endif %}
-            
-            <!-- AÇÕES DO BOTÃO -->
-            {% comment %} {% include 'global/partials/_table_cell_actions.html' with object=movimentacao actions_template='movimentacao/movimentacao_list_actions.html' %} {% endcomment %}
-
-            
+            {% endif %}            
         </tr>
       {% empty %}
         <tr>
@@ -75,11 +59,6 @@
     
   </table>
 </section>
-
-<!-- MODAL -->
-{% comment %} {% for produto in object_list %}
-  {% include "global/partials/_modal_confirm_delete.html" with object=produto object_name="o produto" object_display=produto.nome delete_url=produto.get_delete_url %}
-{% endfor %} {% endcomment %}
 
 <!-- PAGINAÇÃO -->
 {% include 'global/partials/_pagination.html' %}

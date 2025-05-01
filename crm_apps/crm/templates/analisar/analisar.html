@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div id="grafico_cliente" class="grafico">
+  <div id="grafico_cliente" class="grafico mb-5">
     <h3>Clientes cadastrados por dia</h3>
     <canvas
       id="clientesChart"
@@ -41,7 +41,7 @@
     ></canvas>
   </div>
 
-  <div id="grafico_movimentacao" class="grafico" style="display: none">
+  <div id="grafico_movimentacao" class="grafico mb-5" style="display: none">
     <h3>Movimentações por dia</h3>
     <canvas
       id="movimentacoesChart"
@@ -51,7 +51,7 @@
     ></canvas>
   </div>
 
-  <div id="grafico_produto" class="grafico" style="display: none">
+  <div id="grafico_produto" class="grafico mb-5" style="display: none">
     <h3>Quantidade de produtos movimentados</h3>
     <canvas
       id="produtosChart"
@@ -61,7 +61,7 @@
     ></canvas>
   </div>
 
-  <div id="grafico_vendas_por_cliente" class="grafico" style="display: none">
+  <div id="grafico_vendas_por_cliente" class="grafico mb-5" style="display: none">
     <h3>Vendas por cliente</h3>
     <canvas
       id="vendasPorClienteData"
@@ -116,7 +116,7 @@
       fill: false
     },
     {
-      label: 'Compras',
+      label: 'Entradas',
       data: movimentacoesData.compras,
       borderColor: "#ffc107",
       backgroundColor: "rgba(255, 193, 7, 0.2)",
@@ -134,7 +134,7 @@
       fill: false
     },
     {
-      label: 'Compras',
+      label: 'Entradas',
       data: produtosData.compras,
       borderColor: "#ffc107",
       backgroundColor: "rgba(255, 193, 7, 0.2)",
@@ -146,7 +146,7 @@
       "vendasPorClienteData",
       vendasPorClienteData.labels,
       [{
-        label: 'Compras por Cliente',
+        label: 'Vendas por cliente',
         data: vendasPorClienteData.values,
         backgroundColor: 'rgba(255, 159, 64, 0.6)',
         borderColor:     'rgba(255, 159, 64, 1)',
