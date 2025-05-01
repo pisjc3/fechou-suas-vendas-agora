@@ -17,8 +17,18 @@ def create_venda(*,
                  criado_por) -> Movimentacao:
 
     preco_unitario = preco_unitario or produto.preco_venda
-    if quantidade > produto.quantidade_estoque:
-        raise ValueError("Quantidade indisponível em estoque.")
+    quantidade_estoque = produto.quantidade_estoque
+
+    if quantidade > 0 and quantidade > quantidade_estoque:
+        quantidade_str = str(quantidade)
+        if Produto.unidade_requer_inteiro(produto.unidade_medida):
+            estoque_str = str(int(quantidade_estoque)).replace('.', ',')
+        else:
+            estoque_str = str(quantidade_estoque).replace('.', ',')
+
+        raise ValueError(
+            f"Quantidade solicitada ({quantidade_str}) excede o estoque disponível de ({estoque_str})."
+        )
     produto.quantidade_estoque -= Decimal(quantidade)
 
     produto.save()

@@ -36,9 +36,9 @@
         </label>
         <span class="text-danger">*</span>
         {{ form.quantidade }}
-        {% comment %} <small id="quantidade-help" class="form-text">
+        <small id="quantidade_helper_text" class="form-text">
           Selecione um produto para ver a quantidade em estoque.
-        </small> {% endcomment %}
+        </small>
         {% if form.quantidade.errors %}
           <div class="text-danger">{{ form.quantidade.errors }}</div>
         {% endif %}
@@ -49,9 +49,9 @@
           {{ form.preco_unitario.label }}
         </label>
         {{ form.preco_unitario }}
-        {% comment %} <small id="preco-unitario-help" class="form-text">
-          Selecione um produto para ver o preço atual.
-        </small> {% endcomment %}
+        <small id="preco_unitario_helper_text" class="form-text">
+        Selecione um produto para ver o preço atual.
+        </small>
         {% if form.preco_unitario.errors %}
           <div class="text-danger">{{ form.preco_unitario.errors }}</div>
         {% endif %}
@@ -75,17 +75,36 @@
 <script>
   document.addEventListener("DOMContentLoaded", async function() {
     const quantidadeInput = document.getElementById("id_quantidade");
+    const quantidadeHelpText = document.getElementById("quantidade_helper_text");
+    const precoUnitarioHelpText = document.getElementById("preco_unitario_helper_text");
+
+    const produtoSelect = document.getElementById("id_produto");
+
+    if (produtoSelect && produtoSelect.value) {
+      await callbackFunction(produtoSelect.value);
+    }
 
     onInputProdutoChange(async (produtoId) => {
-      const produto = await fetchProdutoDetails(produtoId);
-      ajustarStepQuantidadePorValor(produto.unidade_medida, quantidadeInput);
+      await callbackFunction(produtoId);
     });
+
+    async function callbackFunction(produtoId) {
+      const produto = await fetchProdutoDetails(produtoId);
+
+      ajustarStepQuantidadePorValor(produto.unidade_medida, quantidadeInput);
+
+      if (produto) {
+        getQuantidadeAtualProdutoHelperText(quantidadeHelpText, produto, 'Quantidade disponível em estoque');
+        getPrecoProdutoHelperText(precoUnitarioHelpText, produto.preco_venda, 'Preço de venda atual');
+      }
+    }
 
     {% if request.user.is_superuser %}
       await fetchClientesPorEmpresa();
-      await fetchProdutosPorEmpresa(); 
+      await fetchProdutosPorEmpresa();
     {% endif %}
   });
 </script>
+
 
 {% endblock %}

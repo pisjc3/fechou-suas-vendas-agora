@@ -21,6 +21,12 @@ class Produto(BaseModel):
         CAIXA = 'caixa', _('Caixa')
         OUTRO = 'outro', _('Outro')
 
+    TIPOS_UNIDADE_PRODUTO_QUANTIDADE_MEDIDA_INTEIRA = [
+        UnidadeMedida.UNIDADE,
+        UnidadeMedida.CAIXA,
+        UnidadeMedida.PACOTE,
+    ]
+
     nome = models.CharField(max_length=255)
     descricao = models.TextField(max_length=255, blank=True, null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -45,3 +51,7 @@ class Produto(BaseModel):
 
     def get_delete_url(self):
         return reverse('produto_delete', args=[self.id])
+
+    @classmethod
+    def unidade_requer_inteiro(cls, unidade: str) -> bool:
+        return unidade.lower() in {u.lower() for u in cls.TIPOS_UNIDADE_PRODUTO_QUANTIDADE_MEDIDA_INTEIRA}
