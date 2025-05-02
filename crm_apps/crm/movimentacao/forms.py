@@ -15,7 +15,7 @@ class MovimentacaoFormBase(forms.ModelForm):
         ]
 
     produto = forms.ModelChoiceField(
-        queryset=Produto.objects.none(),
+        queryset=Produto.objects.all(),
         required=True,
         widget=forms.Select(attrs={'class': 'form-select'}),
         label='Produto',
@@ -34,26 +34,6 @@ class MovimentacaoFormBase(forms.ModelForm):
         label='Quantidade'
     )
 
-    def __init__(self, *args, **kwargs):
-        request = kwargs.pop('request', None)
-        super().__init__(*args, **kwargs)
-
-        if request:
-            usuario = request.user
-
-            if usuario.is_superuser:
-                self.fields['produto'].queryset = Produto.objects.filter(
-                    status='ativo'
-                )
-                return
-
-            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
-            if empresa:
-                self.fields['produto'].queryset = Produto.objects.filter(
-                    status='ativo',
-                    empresa=empresa
-                )
-
 
 class VendaForm(MovimentacaoFormBase):
     class Meta(MovimentacaoFormBase.Meta):
@@ -63,7 +43,7 @@ class VendaForm(MovimentacaoFormBase):
         ]
 
     cliente = forms.ModelChoiceField(
-        queryset=Cliente.objects.all(),
+        queryset=Cliente.objects.none(),
         required=False,
         widget=forms.Select(attrs={'class': 'form-select'}),
         label='Cliente',
@@ -79,6 +59,27 @@ class VendaForm(MovimentacaoFormBase):
         }),
         label='Preço unitário'
     )
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+        if request:
+            usuario = request.user
+            if usuario.is_superuser:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo'
+                )
+                self.fields['cliente'].queryset = Cliente.objects.all()
+                return
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+            if empresa:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo',
+                    empresa=empresa
+                )
+                self.fields['cliente'].queryset = Cliente.objects.filter(
+                    empresa=empresa)
 
 
 class CompraForm(MovimentacaoFormBase):
@@ -111,6 +112,24 @@ class CompraForm(MovimentacaoFormBase):
         }),
         label='Novo preço de venda (R$)'
     )
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+        if request:
+            usuario = request.user
+            if usuario.is_superuser:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo'
+                )
+                return
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+            if empresa:
+                self.fields['produto'].queryset = Produto.objects.filter(
+                    status='ativo',
+                    empresa=empresa
+                )
 
 
 class VendaAdminForm(VendaForm):

@@ -2,6 +2,7 @@ from django import forms
 from .models import Produto
 from crm_apps.crm.empresa.models import Empresa
 from crm_apps.crm.categoria.models import Categoria
+from crm_apps.crm.util.selectors import get_empresa_do_usuario
 
 
 class ProdutoCreationFormBase(forms.ModelForm):
@@ -21,7 +22,7 @@ class ProdutoCreationFormBase(forms.ModelForm):
             attrs={'placeholder': 'Digite a descrição'}),
     )
     categoria = forms.ModelChoiceField(
-        queryset=Categoria.objects.all(),
+        queryset=Categoria.objects.none(),
         required=True,
         widget=forms.Select(attrs={'class': 'form-select'}),
         empty_label="Escolha a categoria",
@@ -62,6 +63,21 @@ class ProdutoCreationFormBase(forms.ModelForm):
         label="Preço inicial de venda (R$)",
     )
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+        if request:
+            usuario = request.user
+            if usuario.is_superuser:
+                self.fields['categoria'].queryset = Categoria.objects.all()
+                return
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+            if empresa:
+                self.fields['categoria'].queryset = Categoria.objects.filter(
+                    empresa=empresa
+                )
+
 
 class ProdutoCreationAdminForm(ProdutoCreationFormBase):
     class Meta:
@@ -91,9 +107,24 @@ class ProdutoUpdateForm(ProdutoCreationFormBase):
     )
 
     def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.fields['preco_custo'].label = "Novo preço de Custo (R$)"
         self.fields['preco_venda'].label = "Novo preço de Venda (R$)"
 
         """remove campos não editáveis"""
         self.fields.pop('quantidade_estoque', None)
+
+        produto_instance = self.instance
+
+        if request:
+            usuario = request.user
+            if usuario.is_superuser:
+                self.fields['categoria'].queryset = Categoria.objects.filter(
+                    empresa_id=produto_instance.empresa.id)
+                return
+            empresa = get_empresa_do_usuario(usuario_id=usuario.id)
+            if empresa:
+                self.fields['categoria'].queryset = Categoria.objects.filter(
+                    empresa=empresa
+                )

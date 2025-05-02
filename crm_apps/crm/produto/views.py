@@ -121,6 +121,11 @@ class ProdutoCreateView(CreateView):
     def get_form_class(self):
         return ProdutoCreationAdminForm if self.request.user.is_superuser else ProdutoCreationFormBase
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def form_valid(self, form):
         usuario = self.request.user
         empresa = None
@@ -162,6 +167,11 @@ class ProdutoUpdateView(UpdateView):
     template_name = 'produto/produto_update.html'
     context_object_name = 'produto'
     form_class = ProdutoUpdateForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_object(self, queryset=None):
         usuario = self.request.user
