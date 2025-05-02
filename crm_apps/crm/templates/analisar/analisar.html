@@ -14,7 +14,10 @@
       </select>
     </div>
 
-    <div class="d-flex flex-wrap align-items-end" style="row-gap: 1rem; column-gap: 0.5rem">
+    <div
+      class="d-flex flex-wrap align-items-end"
+      style="row-gap: 1rem; column-gap: 0.5rem"
+    >
       <div class="me-3">
         <label for="dataInicio" class="form-label">Data Início</label>
         <input type="date" id="dataInicio" class="form-control" />
@@ -33,6 +36,7 @@
 
   <div id="grafico_cliente" class="grafico mb-5">
     <h3>Clientes cadastrados por dia</h3>
+    <p id="grafico_cliente_sem_dados" style="display: none"></p>
     <canvas
       id="clientesChart"
       role="img"
@@ -43,6 +47,7 @@
 
   <div id="grafico_movimentacao" class="grafico mb-5" style="display: none">
     <h3>Movimentações por dia</h3>
+    <p id="grafico_movimentacao_sem_dados" style="display: none"></p>
     <canvas
       id="movimentacoesChart"
       role="img"
@@ -53,6 +58,7 @@
 
   <div id="grafico_produto" class="grafico mb-5" style="display: none">
     <h3>Quantidade de produtos movimentados</h3>
+    <p id="grafico_produto_sem_dados" style="display: none"></p>
     <canvas
       id="produtosChart"
       role="img"
@@ -61,13 +67,18 @@
     ></canvas>
   </div>
 
-  <div id="grafico_vendas_por_cliente" class="grafico mb-5" style="display: none">
+  <div
+    id="grafico_vendas_por_cliente"
+    class="grafico mb-5"
+    style="display: none"
+  >
     <h3>Vendas por cliente</h3>
+    <p id="grafico_vendas_por_cliente_sem_dados" style="display: none"></p>
     <canvas
-      id="vendasPorClienteData"
+      id="vendasPorClienteChart"
       role="img"
       aria-label="Gráfico de vendas por cliente"
-      aria-describedby="vendasPorClienteDataDesc"
+      aria-describedby="vendasPorClienteChartDesc"
     ></canvas>
   </div>
 </div>
@@ -88,71 +99,39 @@
 </script>
 
 <script>
-  window.onload = function () {
+  let charts = {};
+
+  document.addEventListener("DOMContentLoaded", () => {
     selecionarAnalisarGrafico()
-    
-    let charts = {};
 
     const clientesData = {{ clientes_data|safe }};
     const movimentacoesData = {{ movimentacoes_data|safe }};
     const produtosData = {{ produtos_data|safe }};
     const vendasPorClienteData= {{ vendas_por_cliente_data|safe }};
-
-    charts["cliente"] = criarGraficoBar("clientesChart", clientesData.labels, [{
-      label: 'Clientes',
-      data: clientesData.values,
-      backgroundColor: 'rgba(54, 162, 235, 0.6)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    }]);
-
-    charts["movimentacao"] = criarGraficoLine("movimentacoesChart", movimentacoesData.labels, [
-    {
-      label: 'Vendas',
-      data: movimentacoesData.vendas,
-      borderColor: "#198754",
-      backgroundColor: "rgba(25, 135, 84, 0.2)",
-      tension: 0.1,
-      fill: false
-    },
-    {
-      label: 'Entradas',
-      data: movimentacoesData.compras,
-      borderColor: "#ffc107",
-      backgroundColor: "rgba(255, 193, 7, 0.2)",
-      tension: 0.1,
-      fill: false
+    
+    if (!isGraficoEmpty(clientesData)) {
+      criarGraficoClientes(clientesData);
+    } else {
+      mensagemGraficoSemDados('grafico_cliente_sem_dados');
     }
-    ]);
 
-    charts["produto"] = criarGraficoBar("produtosChart", produtosData.labels, [{
-      label: 'Vendas',
-      data: produtosData.vendas,
-      borderColor: "#198754",
-      backgroundColor: "rgba(25, 135, 84, 0.2)",
-      tension: 0.1,
-      fill: false
-    },
-    {
-      label: 'Entradas',
-      data: produtosData.compras,
-      borderColor: "#ffc107",
-      backgroundColor: "rgba(255, 193, 7, 0.2)",
-      tension: 0.1,
-      fill: false
-    }]);
+    if (!isGraficoEmpty(movimentacoesData)) {
+      criarGraficoMovimentacoes(movimentacoesData);
+    } else {
+      mensagemGraficoSemDados('grafico_movimentacao_sem_dados');
+    }
 
-    charts["vendas_por_cliente"] = criarGraficoBar(
-      "vendasPorClienteData",
-      vendasPorClienteData.labels,
-      [{
-        label: 'Vendas por cliente',
-        data: vendasPorClienteData.values,
-        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-        borderColor:     'rgba(255, 159, 64, 1)',
-        borderWidth: 1
-      }]
-    );
-  };
+    if (!isGraficoEmpty(produtosData)) {
+      criarGraficoProdutos(produtosData);
+    } else {
+      mensagemGraficoSemDados('grafico_produto_sem_dados');
+    }
+
+    if (!isGraficoEmpty(vendasPorClienteData)) {
+      criarGraficoVendasPorCliente(vendasPorClienteData);
+    } else {
+      mensagemGraficoSemDados('grafico_vendas_por_cliente_sem_dados');
+    }
+  });
 </script>
 {% endblock %}
