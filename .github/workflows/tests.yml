@@ -34,4 +34,9 @@ jobs:
           pip install -r requirements.txt
       - name: Test with Django
         run: |
+          export POSTGRES_NAME="${{ secrets.POSTGRES_NAME }}"
+          export POSTGRES_USER="${{ secrets.POSTGRES_USER }}"
+          export POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}"
+          export POSTGRES_HOST="${{ secrets.POSTGRES_HOST }}"
+          export POSTGRES_PORT="${{ secrets.POSTGRES_PORT }}"
           python manage.py test
