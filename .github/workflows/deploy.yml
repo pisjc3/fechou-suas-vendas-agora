@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
       DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }} 
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
       DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }} 
       ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}  
 
