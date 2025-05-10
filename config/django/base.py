@@ -158,3 +158,7 @@ EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+
+# Configuração do TEST_RUNNER
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
