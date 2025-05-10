@@ -31,6 +31,8 @@ def create_produto(*,
     produto.clean()
     produto.save()
 
+    return produto
+
 
 def update_produto(*,
                    produto_id: int,

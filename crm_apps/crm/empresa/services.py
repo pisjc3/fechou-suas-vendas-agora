@@ -20,3 +20,5 @@ def criar_empresa(*,
 
     empresa.clean()
     empresa.save()
+
+    return empresa

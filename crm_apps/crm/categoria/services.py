@@ -20,6 +20,8 @@ def create_categoria(*,
     categoria.clean()
     categoria.save()
 
+    return categoria
+
 
 def update_categoria(*,
                      categoria_id: int,
