@@ -3,7 +3,7 @@ name: Django CI/CD - Deploy para Render
 on:
   push:
     branches:
-      - main  
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' 
+          python-version: "3.10"
 
       - name: Instalar dependências
         run: |
@@ -34,8 +34,12 @@ jobs:
         run: |
           python manage.py collectstatic --noinput
 
-      - name: Deploy para Render
-        uses: render-examples/django-render-action@v1
-        with:
-          render_api_key: ${{ secrets.RENDER_API_KEY }} 
-          render_service_id: ${{ secrets.RENDER_SERVICE_ID }} 
+      # - name: Deploy para Render
+      #   uses: render-examples/django-render-action@v1
+      #   with:
+      #     render_api_key: ${{ secrets.RENDER_API_KEY }}
+      #     render_service_id: ${{ secrets.RENDER_SERVICE_ID }}
+      - name: Deploy para Render via API
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
