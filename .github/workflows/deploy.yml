@@ -9,12 +9,25 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }} 
+      DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }} 
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}  
+
+      # Variáveis do banco de dados PostgreSQL
       POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
       POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+      # Variáveis do email
+      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+      EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+
 
     steps:
       - name: Checkout do código
