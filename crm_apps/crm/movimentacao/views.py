@@ -32,8 +32,8 @@ class MovimentacaoListView(ListView):
             self.request.GET, queryset=queryset)
         queryset_filtrado = self.filterset.qs
 
-        sort_param = self.request.GET.get('sort', 'produto__nome')
-        order_param = self.request.GET.get('order', 'asc')
+        sort_param = self.request.GET.get('sort', 'data_criacao')
+        order_param = self.request.GET.get('order', 'desc')
 
         if sort_param == 'data-operacao':
             sort_param = 'data_criacao'
