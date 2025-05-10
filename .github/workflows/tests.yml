@@ -32,8 +32,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Debug Environment Variables
+        run: |
+          echo "DJANGO_SETTINGS_MODULE: $DJANGO_SETTINGS_MODULE"
+          echo "POSTGRES_NAME: $POSTGRES_NAME"
+          echo "POSTGRES_USER: $POSTGRES_USER"
+          echo "POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
+          echo "POSTGRES_HOST: $POSTGRES_HOST"
+          echo "POSTGRES_PORT: $POSTGRES_PORT"
       - name: Test with Django
         run: |
+          export DJANGO_SETTINGS_MODULE="${{ env.DJANGO_SETTINGS_MODULE }}"
           export POSTGRES_NAME="${{ secrets.POSTGRES_NAME }}"
           export POSTGRES_USER="${{ secrets.POSTGRES_USER }}"
           export POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}"
