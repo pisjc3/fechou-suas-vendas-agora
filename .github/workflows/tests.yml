@@ -27,7 +27,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_NAME }}
         options: >-
-          --health-cmd pg_isready --interval 10s --timeout 5s --retries 5
+          --health-cmd pg_isready
 
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
       - name: Wait for PostgreSQL
         run: |
           echo "Waiting for PostgreSQL..."
-          sleep 15 # Aguarda um pouco para o serviço iniciar
+          sleep 10 # Reduzi um pouco o tempo de espera
       - name: Debug Environment Variables
         run: |
           echo "DJANGO_SETTINGS_MODULE: $DJANGO_SETTINGS_MODULE"
