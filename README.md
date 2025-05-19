@@ -149,7 +149,7 @@ python manage.py migrate
 
 #### Testes
 
-Os scripts de testes devem ser escritos dentro de cada módulo da entidade. Ex: `crm_apps/crm/cliente/tests/<test_models.py>`
+Os scripts de testes devem ser escritos dentro de cada módulo da entidade. Ex: `crm_apps/crm/cliente/tests/test_models.py`
 
 Para executar os testes, rode o script exemplo
 ```powershell
